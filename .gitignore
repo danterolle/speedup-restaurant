@@ -1,0 +1,7 @@
+.idea
+.venv
+venv/
+
+# Flask stuff:
+instance/
+.webassets-cache
