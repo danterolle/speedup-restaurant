@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from datetime import datetime
+from src.database import db, Reservation, Order
 
 app = Flask(__name__)
 
@@ -14,40 +14,6 @@ orders = []
 @app.route('/')
 def index():
     return render_template('index.html')
-
-
-# pagina per prenotare un tavolo
-@app.route('/reserve', methods=['GET', 'POST'])
-def reserve():
-    if request.method == 'POST':
-        # recupera i dati dalla richiesta
-        name = request.form['name']
-        surname = request.form['surname']
-        email = request.form['email']
-        phone = request.form['phone']
-        num_people = request.form['num_people']
-        date = request.form['date']
-        time = request.form['time']
-        notes = request.form['notes']
-
-        # crea un oggetto prenotazione
-        reservation = {
-            'name': name,
-            'surname': surname,
-            'email': email,
-            'phone': phone,
-            'num_people': num_people,
-            'date': date,
-            'time': time,
-            'notes': notes
-        }
-
-        # aggiunge la prenotazione alla lista
-        reservations.append(reservation)
-
-        return redirect('/reservations')
-    else:
-        return render_template('reserve.html')
 
 
 # pagina per visualizzare tutte le prenotazioni
@@ -68,28 +34,47 @@ def menu():
     return render_template('menu.html', menu_items=menu_items)
 
 
+# pagina per prenotare un tavolo
+@app.route('/reservations', methods=['GET', 'POST'])
+def reservations():
+    if request.method == 'POST':
+        name = request.form['name']
+        surname = request.form['surname']
+        email = request.form['email']
+        phone = request.form['phone']
+        num_people = request.form['num_people']
+        date = request.form['date']
+        time = request.form['time']
+        notes = request.form['notes']
+        reservation = Reservation(name=name, surname=surname, email=email, phone=phone, num_people=num_people,
+                                  date=date, time=time, notes=notes)
+        db.session.add(reservation)
+        db.session.commit()
+
+        return redirect('/reservations')
+    else:
+        reservations = Reservation.query.all()
+        return render_template('reservations.html', reservations=reservations)
+
+
 # pagina per inviare un ordine
-@app.route('/order', methods=['POST'])
-def order():
-    # recupera i dati dalla richiesta
-    table_number = request.form['table_number']
-    items = request.form.getlist('items')
+@app.route('/orders', methods=['GET', 'POST'])
+def orders():
+    if request.method == 'POST':
+        table_number = request.form['table_number']
+        items = request.form.getlist('items')
+        total_price = calculate_total_price(items)
+        order = Order(table_number=table_number, items=items, total_price=total_price, paid=False)
+        db.session.add(order)
+        db.session.commit()
+        return redirect('/orders')
 
-    # crea un oggetto ordine
-    order = {
-        'table_number': table_number,
-        'items': items,
-        'time': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        'total_price': calculate_total_price(items)
-    }
-
-    # aggiunge l'ordine alla lista
-    orders.append(order)
-
-    return redirect('/orders')
+    else:
+        orders = Order.query.all()
+        return render_template('orders.html', orders=orders)
 
 
-# funzione per calcolare il prezzo totale dell
+# funzione per calcolare il prezzo totale dell'ordine
 def calculate_total_price(items):
     menu_items = [
         {'name': 'Pizza Margherita', 'price': 10},
@@ -104,3 +89,13 @@ def calculate_total_price(items):
             if item == menu_item['name']:
                 total_price += menu_item['price']
     return total_price
+
+
+@app.route('/orders')
+def view_orders():
+    return render_template('orders.html', orders=orders)
+
+
+if __name__ == '__main__':
+    db.create_all()
+    app.run(debug=True)
