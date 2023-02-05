@@ -33,5 +33,3 @@ L'Ordine viene consegnato al Cliente.
 Il Cliente decide se pagare dall'applicazione web oppure in cassa.
 
 L'Amministratore gestisce il pagamento degli ordini che avviene in contanti.
-
-# Iterazione 3, Analisi

@@ -20,11 +20,13 @@ In questa iterazione, del caso d’uso UC1 è di interesse lo scenario principal
 
 - Prenotazione: accordo in cui si riserva o si garantisce l'utilizzo dei servizi del ristorante
 
-### UC1.2 Caso d’uso UC1, Diagramma di sequenza di sistema
+### UC1.2 Diagramma di sequenza di sistema
 
 ![nome_immagine](URL_immagine)
 
-### UC1.3 Caso d'uso UC1, contratti delle operazioni
+### UC1.3 Contratti delle operazioni
+
+#### inserimentoPrenotazione
 
 | Contratti delle operazioni |                                                                                                                                                                           |
 |----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -33,4 +35,20 @@ In questa iterazione, del caso d’uso UC1 è di interesse lo scenario principal
 | Pre-condizioni             | -                                                                                                                                                                         |
 | Post-condizioni            | - è stata creata una nuova istanza p di prenotazione<br> - gli attributi di p sono stati inizializzati<br> - p è stata associatata a SUR tramite la prenotazione corrente |
 
+#### confermaInserimento
+
+| Contratti delle operazioni |                                                                                                |
+|----------------------------|------------------------------------------------------------------------------------------------|
+| Operazione                 | confermaPrenotazione()                                                                         |
+| Riferimenti                | Caso d'uso: Inserimento di una nuova prenotazione mediante l'applicazione                      |
+| Pre-condizioni             | - è in corso l'inserimento della prenotazione p                                                |
+| Post-condizioni            | - è stata associata l'istanza p di prenotazione corrente a SUR tramite l'associazione gestisce |
+
 # Iterazione 1, Progettazione
+
+## Diagrammi d'interazione
+
+### Diagrammi di sequenza
+
+### Diagrammi delle classi
+
