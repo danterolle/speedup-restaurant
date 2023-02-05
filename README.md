@@ -35,7 +35,7 @@ Il Cliente decide se pagare dall'applicazione web oppure in cassa.
 L'Amministratore gestisce il pagamento degli ordini che avviene in contanti.
 
 
-## 1.1 Introduzione
+## Introduzione
 
 SpeedUp Restaurant! è un'applicazione web che offre delle funzionalità per automatizzare la gestione delle prenotazioni dei tavoli, la gestione degli ordini e la contabilità di un ristorante. 
 I clienti possono prenotarsi in vari modi: 
@@ -45,8 +45,51 @@ I clienti possono prenotarsi in vari modi:
 
 Eventuali note sono opzionali ma possono essere comunicate in tutte e due le modalità. Inoltre il cliente ha la libertà di prenotare il proprio tavolo direttamente sul posto. Ogni modalità di prenotazione viene comunque gestita dall'amministratore che interagisce col software.
 
-I clienti, una volta seduti al tavolo, possono visionare le portate direttamente dall'applicazione web e scegliere le categorie e le portate del menù da inserire all'interno del proprio ordine. Il cuoco elabora l'ordine ricevuto che successivamente viene consegnato al cliente. Il cliente può decidere di inviare un ordine e aggiungerlo a quello precedente. Eventualmente può anche modificare l'ordine già in lista.
+I clienti, una volta seduti al tavolo, possono visionare le portate direttamente dall'applicazione web e scegliere le categorie e le portate del menù da inserire all'interno del proprio ordine. Il cuoco elabora l'ordine ricevuto che successivamente viene consegnato al cliente dal cameriere. Il cliente può decidere di inviare un ordine e aggiungerlo a quello precedente. Eventualmente può anche modificare l'ordine già in lista. 
 L'ordine precedentemente inviato genera automaticamente il costo totale, specificando il costo di ogni singola portata. Il cliente può decidere se effettuare il pagamento dall'applicazione web o direttamente in cassa.
+
+# Iterazione 1, Analisi
+
+Per l’iterazione 1, sono stati scelti i seguenti requisiti:
+
+- lo scenario principale di successo del caso d’uso UC1 (Inserimento di una nuova prenotazione mediante l'applicazione)
+
+Questo capitolo descrive l’analisi svolta nell’iterazione 1, mentre il capitolo successivo descrive l’attività di progettazione.
+
+## Caso d'uso UC1
+
+### UC1.1 Modello di dominio
+
+In questa iterazione, del caso d’uso UC1 è di interesse lo scenario principale di successo, nella sua interezza. Da esso è possibile identificare le seguenti classi concettuali:
+
+- Cliente: attore primario, che interagisce direttamente con il sistema
+
+- SUR: rappresenta l'applicazione web SpeedUp Restaurant!
+
+- Tavolo: componente fisico che viene prenotato dal cliente
+
+- Prenotazione: accordo in cui si riserva o si garantisce l'utilizzo dei servizi del ristorante
+
+### UC1.2 Caso d’uso UC1, Diagramma di sequenza di sistema
+
+![nome_immagine](URL_immagine)
+
+### UC1.3 Caso d'uso UC1, contratti delle operazioni
+
+| Contratti delle operazioni | |
+|----------------------------------|---------------------------------------------------------|
+| Operazione                       | inserimentoPrenotazione(nome, cognome, email, cellulare, num_persone, data, ora, note) |
+| Riferimenti                      | Caso d'uso: Inserimento di una nuova prenotazione mediante l'applicazione |
+| Pre-condizioni                   | -                                        |
+| Post-condizioni                  | - è stata creata una nuova istanza p di prenotazione<br> - gli attributi di p sono stati inizializzati<br> - p è stata associatata a SUR tramite la prenotazione corrente |
+
+# Iterazione 1, Progettazione
+
+# Iterazione 2
+
+
+
+
 
 ## Documento di visione
 
@@ -99,6 +142,7 @@ Il sistema deve possedere le seguenti caratteristiche:
 | Amministratore | Gestore delle prenotazioni e della contabilità della struttura                  |
 | Cliente        | L'utente che usufruisce dei servizi di ristorazione                             |
 | Cuoco          | La persona incaricata di elaborare gli ordini                                   |
+| Cameriere      | L'addetto alla consegna degli ordini                                            |
 
 ## Modello dei casi d'uso
 
@@ -149,10 +193,10 @@ Per i restanti casi d’uso si fornisce una descrizione in formato breve.
 | Portata                          | Applicazione SpeedUp Restaurant!                        |
 | Livello                          | Obiettivo utente                                        |
 | Attore primario                  | Cliente                                                 |
-| Parti interessate e interessi    | - Cliente: visiona e sceglie le portate dal menù<br> - Applicazione SpeedUp Restaurant!: registra le informazioni relative all'Ordine<br> - Cuoco: elabora l'Ordine<br> - Addetto: consegna l'Ordine elaborato |
+| Parti interessate e interessi    | - Cliente: visiona e sceglie le portate dal menù<br> - Applicazione SpeedUp Restaurant!: registra le informazioni relative all'Ordine |
 | Pre-condizioni                   | Il Cliente è prenotato e deve essere connesso alla rete internet per visualizzare il menù |
-| Garanzia di successo             | L'inserimento di un nuovo Ordine è andato a buon fine. Il sistema ha registrato le informazioni all'Ordine e l'Ordine è stato elaborato |
-| Scenario principale di successo  | 1. Il Cliente accede all'applicazione web<br> 2. Il Cliente sceglie l'opzione "visualizza menù"<br> 3. Il Cliente sceglie le varie portate<br> 4. Il Cliente effettua l'Ordine<br> 5. Il sistema registra le informazioni relative all'Ordine<br> 6. Il sistema conferma la ricezione dell'Ordine mostrandolo al Cliente tramite un ID<br> 7. L'Ordine viene inserito nella lista degli ordini da elaborare del Cuoco<br> 8. Il Cuoco elabora l'Ordine<br> 9. Il Cuoco comunica all'Addetto di aver elaborato l'Ordine<br> 10. L'Addetto consegna l'Ordine al Cliente<br> 11. L'Addetto aggiorna la lista degli ordini consegnati |
+| Garanzia di successo             | L'inserimento di un nuovo Ordine è andato a buon fine. Il sistema ha registrato le informazioni all'Ordine |
+| Scenario principale di successo  | 1. Il Cliente accede all'applicazione web<br> 2. Il Cliente sceglie l'opzione "visualizza menù"<br> 3. Il Cliente sceglie le varie portate<br> 4. Il Cliente effettua l'Ordine<br> 5. Il sistema registra le informazioni relative all'Ordine<br> 6. Il sistema conferma la ricezione dell'Ordine mostrandolo al Cliente tramite un ID<br> 7. L'Ordine viene inserito nella lista degli ordini da elaborare |
 | Estensione                       | Il Cliente può modificare il proprio Ordine fino a quando l'Ordine non è passato dallo stato di ordinato allo stato di elaborazione:<br> 1. Il Cliente sceglie l'opzione "modifica ordine"<br> 2. Il Cliente inserisce il codice ID dell'Ordine<br> 3. L'Ordine viene aggiungo in una lista dedicata agli ordini in fase di modifica<br> 4. Il Cliente può aggiungere e/o rimuovere a piacimento le portate dall'Ordine<br> 5. Il sistema registra le modifiche apportate all'Ordine<br> 6. Il sistema indica di aver finito |
 | Requisiti speciali | L'operazione di modifica dell'Ordine non deve superare i 10 minuti |
 | Frequenza di ripetizione | Circa 100 ordini al giorno |
@@ -172,23 +216,27 @@ Per i restanti casi d’uso si fornisce una descrizione in formato breve.
 | Elenco delle varianti tecnologiche e dei dati | Il Cliente può scegliere di effettuare il pagamento mediante carta Mastercard, VISA o PayPal |
 | Frequenza di ripetizione | Circa 100 pagamenti al giorno |
 
-### UC4: Inserimento di una nuova prenotazione in loco
+### UC4: Elaborazione degli ordini
+
+L'Ordine comunicato viene elaborato dal Cuoco e successivamente il Cameriere lo consegna al Cliente.
+
+### UC5: Inserimento di una nuova prenotazione in loco
 
 Il Cliente ha la possibilità di effettuare una prenotazione di persona direttamente sul posto.
 
-### UC5: Inserimento di una nuova prenotazione tramite telefonata
+### UC6: Inserimento di una nuova prenotazione tramite telefonata
 
 Il Cliente può chiamare il ristorante e comunicare all'Addetto la prenotazione.
 
-### UC6: Annullamento della prenotazione
+### UC7: Annullamento della prenotazione
 
 Il Cliente può decidere di annullare una prenotazione relativa al proprio tavolo.
 
-### UC7: Visualizzazione delle prenotazioni
+### UC8: Visualizzazione delle prenotazioni
 
 L'Addetto ha la possibilità di visualizzare le prenotazioni relative ai tavoli e i dati inseriti dal Cliente.
 
-### UC8: Visualizzazione dei pagamenti
+### UC9: Visualizzazione dei pagamenti
 
 L'Amministratore può visualizzare gli ordini da pagare e/o pagati.
 
@@ -197,5 +245,4 @@ L'Amministratore può visualizzare gli ordini da pagare e/o pagati.
 | ID | Regola | Modificabilità | Sorgente | 
 |----|--------|----------------|----------|
 | R1 | Se la prenotazione è effettuata nei giorni festivi, viene applicato un sovrapprezzo del 10% su tutti gli ordini | Bassa | Politica interna del ristorante | 
-| R2 | Se la prenotazione avviene nei giorni feriali, viene applicato uno sconto del 5% su ogni ordine che superi i 10 euro | Bassa | Politica interna del ristorante | 
-| R3 | Se la prenotazione viene disdetta 10 minuti prima dell'effettivo orario comunicato, il Cliente viene inserito nella blocklist per 30 giorni | Bassa | Politica interna del ristorante |
+| R2 | Se la prenotazione avviene nei giorni feriali, viene applicato uno sconto del 5% su ogni ordine che superi i 10 euro | Bassa | Politica interna del ristorante |
