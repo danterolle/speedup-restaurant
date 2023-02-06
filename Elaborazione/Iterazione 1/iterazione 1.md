@@ -20,9 +20,11 @@ In questa iterazione, del caso d’uso UC1 è di interesse lo scenario principal
 
 - Prenotazione: accordo in cui si riserva o si garantisce l'utilizzo dei servizi del ristorante
 
+![modello di analisi](./modello%20di%20analisi.png)
+
 ### UC1.2 Diagramma di sequenza di sistema
 
-![nome_immagine](URL_immagine)
+![SSD UC1](./SSD%20UC1.png)
 
 ### UC1.3 Contratti delle operazioni
 
@@ -47,8 +49,14 @@ In questa iterazione, del caso d’uso UC1 è di interesse lo scenario principal
 # Iterazione 1, Progettazione
 
 ## Diagrammi d'interazione
-
 ### Diagrammi di sequenza
 
+![modello di progettazione](./modello%20di%20progettazione.png)
+
 ### Diagrammi delle classi
+
+![inserimentoPrenotazione](./SD%20inserimentoPrenotazione.png)
+![confermaPrenotazione](./SD%20confermaInserimento.png)
+
+
 
