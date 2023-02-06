@@ -51,12 +51,13 @@ In questa iterazione, del caso d’uso UC1 è di interesse lo scenario principal
 ## Diagrammi d'interazione
 ### Diagrammi di sequenza
 
-![modello di progettazione](./modello%20di%20progettazione.png)
+![inserimentoPrenotazione](./SD%20inserimentoPrenotazione.png)
+![confermaPrenotazione](./SD%20confermaInserimento.png)
 
 ### Diagrammi delle classi
 
-![inserimentoPrenotazione](./SD%20inserimentoPrenotazione.png)
-![confermaPrenotazione](./SD%20confermaInserimento.png)
+![modello di progettazione](./modello%20di%20progettazione.png)
+
 
 
 
