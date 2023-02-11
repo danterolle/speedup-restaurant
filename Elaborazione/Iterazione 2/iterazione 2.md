@@ -23,11 +23,9 @@ In questa iterazione, del caso d’uso UC1 è d'interesse lo scenario principale
 
 - SUR: rappresenta l'applicazione web SpeedUp Restaurant!
 
-- Tavolo: componente fisico che viene prenotato dal cliente
-
 - Prenotazione: accordo in cui si riserva o si garantisce l'utilizzo dei servizi del ristorante
 
-![modello di analisi](./modello%20di%20analisi.png)
+![modello di dominio](./modello%20di%20dominio.png)
 
 ### UC1.2 Diagramma di sequenza di sistema
 
@@ -73,4 +71,4 @@ In questa iterazione, del caso d’uso UC1 è d'interesse lo scenario principale
 
 ### Diagrammi delle classi
 
-![modello di progettazione](./modello%20di%20progettazione.png)
+![diagramma delle classi](./diagramma%20delle%20classi.png)
