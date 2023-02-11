@@ -20,7 +20,7 @@ In questa iterazione, del caso d’uso UC1 è di interesse lo scenario principal
 
 - Prenotazione: accordo in cui si riserva o si garantisce l'utilizzo dei servizi del ristorante
 
-![modello di analisi](./modello%20di%20analisi.png)
+![modello di dominio](./modello%20di%20dominio.png)
 
 ### UC1.2 Diagramma di sequenza di sistema
 
@@ -56,8 +56,18 @@ In questa iterazione, del caso d’uso UC1 è di interesse lo scenario principal
 
 ### Diagrammi delle classi
 
-![modello di progettazione](./modello%20di%20progettazione.png)
+![diagramma delle classi](./diagramma%20delle%20classi.png)
 
+# Iterazione 1, Refactoring
 
+Dopo un'attenta analisi al modello di dominio, si è notato che, per la semplificazione del progetto, la classe Tavolo può essere eliminata
+e l'ID del Tavolo può essere reintegrato all'interno della classe Cliente. Una prenotazione può riferirsi solo ad un tavolo.
 
+## UC1.1 Modello di dominio
+
+![modello di dominio](./refactoring/modello%20di%20dominio.png)
+
+## Diagramma delle classi
+
+![diagramma delle classi](./refactoring/diagramma%20delle%20classi.png)
 
