@@ -1,6 +1,7 @@
 import datetime
 
 
+# TODO: Scrivere delle unit test
 class Prenotazione:
     prenotazioni = []
 
@@ -54,6 +55,7 @@ def get_prenotazione():
 
 def modifica_prenotazione(prenotazione):
     data_ora_attuale = datetime.datetime.now()
+    # TODO: AttributeError: 'Prenotazione' object has no attribute 'data_ora'
     data_ora_prenotazione = datetime.datetime.strptime(prenotazione.data_ora, '%Y-%m-%d %H:%M:%S')
     if (data_ora_prenotazione - data_ora_attuale).total_seconds() <= 7200:
         nuovo_numero_persone = input("Inserisci il nuovo numero di persone: ")
