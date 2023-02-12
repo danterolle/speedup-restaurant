@@ -66,7 +66,6 @@ Per i restanti casi d’uso si fornisce una descrizione in formato breve.
 | Pre-condizioni                                | Il Cliente deve avere effettuato almeno un Ordine                                                                                                                                                                                                                                                                                                                                                                       |
 | Garanzia di successo                          | Il pagamento è andato a buon fine. Il sistema ha registrato le informazioni del pagamento                                                                                                                                                                                                                                                                                                                               |
 | Scenario principale di successo               | 1. Il Cliente accede all'applicazione web<br> 2. Il Cliente sceglie l'opzione "paga ordine"<br> 3. Il Cliente visualizza il costo totale dell'Ordine<br> 4. Il Cliente sceglie la modalità di pagamento<br> 5. Il Cliente effettua il pagamento<br> 6. Il sistema registra le informazioni dell'avvenuto pagamento<br> 7. Il sistema invia per email una ricevuta del pagamento<br> 8. Il sistema indica di aver finito |
-| Estensione                                    | Il Cliente può decidere di pagare in contanti:<br> 1. Il Cliente si reca in cassa<br> 2. Il Cliente comunica il codice ID dell'Ordine all'Amministratore<br> 3. Il Cliente effetta il pagamento in contanti<br> 4. L'Amministratore registra i dati del pagamento nel sistema<br> 5. L'Amministratore indica di aver finito                                                                                             |
 | Elenco delle varianti tecnologiche e dei dati | Il Cliente può scegliere di effettuare il pagamento mediante carta Mastercard, VISA o PayPal                                                                                                                                                                                                                                                                                                                            |
 | Frequenza di ripetizione                      | Circa 100 pagamenti al giorno                                                                                                                                                                                                                                                                                                                                                                                           |
 
@@ -74,22 +73,14 @@ Per i restanti casi d’uso si fornisce una descrizione in formato breve.
 
 L'Ordine comunicato viene elaborato dal Cuoco e successivamente il Cameriere lo consegna al Cliente.
 
-## UC5: Inserimento di una nuova prenotazione in loco
-
-Il Cliente ha la possibilità di effettuare una prenotazione di persona direttamente sul posto.
-
-## UC6: Inserimento di una nuova prenotazione tramite telefonata
-
-Il Cliente può chiamare il ristorante e comunicare all'Addetto la prenotazione.
-
-## UC7: Annullamento della prenotazione
+## UC5: Annullamento della prenotazione
 
 Il Cliente può decidere di annullare una prenotazione relativa al proprio tavolo.
 
-## UC8: Visualizzazione delle prenotazioni
+## UC6: Visualizzazione delle prenotazioni
 
 L'Addetto ha la possibilità di visualizzare le prenotazioni relative ai tavoli e i dati inseriti dal Cliente.
 
-## UC9: Visualizzazione dei pagamenti
+## UC7: Visualizzazione dei pagamenti
 
 L'Amministratore può visualizzare gli ordini da pagare e/o pagati.
