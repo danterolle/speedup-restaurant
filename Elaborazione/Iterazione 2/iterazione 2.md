@@ -35,27 +35,24 @@ In questa iterazione, del caso d’uso UC1 è d'interesse lo scenario principale
 
 #### getPrenotazione
 
-| Contratti delle operazioni |                                                                           |
-|----------------------------|---------------------------------------------------------------------------|
 | Operazione                 | getPrenotazione(cod)                                                      |
+|----------------------------|---------------------------------------------------------------------------|
 | Riferimenti                | Caso d'uso: Inserimento di una nuova prenotazione mediante l'applicazione |
 | Pre-condizioni             | -                                                                         |
 | Post-condizioni            | -                                                                         |
 
 #### modificaPrenotazione
 
-| Contratti delle operazioni |                                                                           |
-|----------------------------|---------------------------------------------------------------------------|
 | Operazione                 | modificaPrenotazione(data, ora, num_persone)                              |
+|----------------------------|---------------------------------------------------------------------------|
 | Riferimenti                | Caso d'uso: Inserimento di una nuova prenotazione mediante l'applicazione |
 | Pre-condizioni             | - esiste la prenotazione                                                  |
 | Post-condizioni            | -                                                                         |
 
 #### confermaModificaPrenotazione
 
-| Contratti delle operazioni |                                                                                              |
-|----------------------------|----------------------------------------------------------------------------------------------|
 | Operazione                 | confermaModificaPrenotazione()                                                               |
+|----------------------------|----------------------------------------------------------------------------------------------|
 | Riferimenti                | Caso d'uso: Inserimento di una nuova prenotazione mediante l'applicazione                    |
 | Pre-condizioni             | - sono stati modificati i dettagli di una prenotazione                                       |
 | Post-condizioni            | - la prenotazione, contenuta nell'elenco delle prenotazioni, è stata aggiornata con successo |

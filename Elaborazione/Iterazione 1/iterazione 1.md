@@ -30,18 +30,16 @@ In questa iterazione, del caso d’uso UC1 è di interesse lo scenario principal
 
 #### inserimentoPrenotazione
 
-| Contratti delle operazioni |                                                                                                                                                                           |
-|----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Operazione                 | inserimentoPrenotazione(nome, cognome, email, cellulare, num_persone, data, ora, note)                                                                                    |
+|----------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Riferimenti                | Caso d'uso: Inserimento di una nuova prenotazione mediante l'applicazione                                                                                                 |
 | Pre-condizioni             | -                                                                                                                                                                         |
 | Post-condizioni            | - è stata creata una nuova istanza p di prenotazione<br> - gli attributi di p sono stati inizializzati<br> - p è stata associatata a SUR tramite la prenotazione corrente |
 
 #### confermaInserimento
 
-| Contratti delle operazioni |                                                                                                |
-|----------------------------|------------------------------------------------------------------------------------------------|
 | Operazione                 | confermaPrenotazione()                                                                         |
+|----------------------------|------------------------------------------------------------------------------------------------|
 | Riferimenti                | Caso d'uso: Inserimento di una nuova prenotazione mediante l'applicazione                      |
 | Pre-condizioni             | - è in corso l'inserimento della prenotazione p                                                |
 | Post-condizioni            | - è stata associata l'istanza p di prenotazione corrente a SUR tramite l'associazione gestisce |
