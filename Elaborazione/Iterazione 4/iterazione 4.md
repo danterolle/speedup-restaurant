@@ -30,7 +30,7 @@ In questa iterazione viene considerata l'estensione del caso d’uso UC2. Da ess
 
 ### UC2.2 Diagramma di sequenza di sistema
 
-![SSD UC2](./SSD%20UC2.png)
+![SSD estensione UC2](./SSD%20estensione%20UC2.png)
 
 ### UC2.3 Contratti delle operazioni
 
@@ -56,8 +56,9 @@ In questa iterazione viene considerata l'estensione del caso d’uso UC2. Da ess
 ## Diagrammi d'interazione
 ### Diagrammi di sequenza
 
-![scegliPortata](./SD%20scegliPortata.png)
-![inserimentoPortata](./SD%20inserimentoPortata.png)
+![getOrdine](./SD%20getOrdine.png)
+![modificaOrdine](./SD%20modificaOrdine.png)
+![confermaModificaOrdine](./SD%20confermaModificaOrdine.png)
 
 ### Diagrammi delle classi
 
