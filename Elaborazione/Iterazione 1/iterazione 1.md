@@ -10,7 +10,7 @@ Questo capitolo descrive l’analisi svolta nell’iterazione 1, mentre il capit
 
 ### UC1.1 Modello di dominio
 
-In questa iterazione, del caso d’uso UC1 è di interesse lo scenario principale di successo, nella sua interezza. Da esso è possibile identificare le seguenti classi concettuali:
+In questa iterazione, del caso d’uso UC1 è d'interesse lo scenario principale di successo, nella sua interezza. Da esso è possibile identificare le seguenti classi concettuali:
 
 - Cliente: attore primario, che interagisce direttamente con il sistema
 

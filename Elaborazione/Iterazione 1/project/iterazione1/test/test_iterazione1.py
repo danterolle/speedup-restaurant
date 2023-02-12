@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch
-from src.iterazione1 import inserimentoPrenotazione
+import sys
+sys.path.append('../')
 
 
 class TestInserimentoPrenotazione(unittest.TestCase):

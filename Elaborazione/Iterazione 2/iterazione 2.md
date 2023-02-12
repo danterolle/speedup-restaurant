@@ -13,11 +13,11 @@ Si rende noto che, in fase implementativa, sarebbe possibile creare una lista ap
 
 Questo capitolo descrive l’analisi svolta nell’iterazione 2, mentre il capitolo successivo descrive l’attività di progettazione.
 
-## Caso d'uso UC1
+## Estensione Caso d'uso UC1
 
 ### UC1.1 Modello di dominio
 
-In questa iterazione, del caso d’uso UC1 è d'interesse lo scenario principale di successo, nella sua interezza. Da esso è possibile identificare le seguenti classi concettuali:
+In questa iterazione viene considerata l'estensione del caso d’uso UC1. Da esso è possibile identificare le seguenti classi concettuali:
 
 - Cliente: attore primario, che interagisce direttamente con il sistema
 
