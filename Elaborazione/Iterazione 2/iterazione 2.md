@@ -35,11 +35,11 @@ In questa iterazione viene considerata l'estensione del caso d’uso UC1. Da ess
 
 #### getPrenotazione
 
-| Operazione                 | getPrenotazione(cod)                                                      |
-|----------------------------|---------------------------------------------------------------------------|
-| Riferimenti                | Caso d'uso: Inserimento di una nuova prenotazione mediante l'applicazione |
-| Pre-condizioni             | -                                                                         |
-| Post-condizioni            | -                                                                         |
+| Operazione      | getPrenotazione(id)                                                       |
+|-----------------|---------------------------------------------------------------------------|
+| Riferimenti     | Caso d'uso: Inserimento di una nuova prenotazione mediante l'applicazione |
+| Pre-condizioni  | -                                                                         |
+| Post-condizioni | -                                                                         |
 
 #### modificaPrenotazione
 

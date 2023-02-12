@@ -34,22 +34,29 @@ In questa iterazione viene considerata l'estensione del caso d’uso UC2. Da ess
 
 ### UC2.3 Contratti delle operazioni
 
-#### scegliPortata
+#### getOrdine
 
-| Operazione                 | scegliPortata()                                                                                                                                                                         |
-|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Riferimenti                | Caso d'uso: Gestione degli ordini                                                                                                                                                       |
-| Pre-condizioni             | - Amministratore deve avere abilitato l'accesso alle ordinazioni per il tavolo                                                                                                          |
-| Post-condizioni            | - è stata creata una nuova istanza p di portata<br> - gli attributi della portata p sono stati inizializzati<br> - p è stata associatata a Cliente tramite l'associazione elencoPortate |
+| Operazione      | getOrdine(idTavolo)                    |
+|-----------------|----------------------------------------|
+| Riferimenti     | Caso d'uso: Gestione degli ordini      |
+| Pre-condizioni  | - deve esistere un ordine per idTavolo |
+| Post-condizioni | -                                      |
 
+#### modificaOrdine
 
-#### inserimentoPortata
+| Operazione      | modificaOrdine(listaPortate[Portata]) |
+|-----------------|---------------------------------------|
+| Riferimenti     | Caso d'uso: Gestione degli ordini     |
+| Pre-condizioni  | - esiste l'ordine                     |
+| Post-condizioni | -                                     |
 
-| Operazione                 | inserimentoPortata(idTavolo, listaPortate[Portata])                                                                                                                                                                                                                          |
-|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Riferimenti                | Caso d'uso: Gestione degli ordini                                                                                                                                                                                                                                            |
-| Pre-condizioni             | - La lista delle portate non deve essere vuota<br> - deve essere stata creata la mappa elencoOrdini                                                                                                                                                                          |
-| Post-condizioni            | - è stata creata l'associazione tra Cliente e SUR denominata elencoOrdini<br> - è stata aggiornata la lista delle portate all'interno di elencoOrdini relativo ad un determinato idTavolo<br> - è stato inviato un messaggio di conferma dell'avvenuta ricezione dell'ordine |
+#### confermaModificaOrdine
+
+| Operazione      | confermaModificaOrdine()                                                                                      |
+|-----------------|---------------------------------------------------------------------------------------------------------------|
+| Riferimenti     | Caso d'uso: Gestione degli ordini                                                                             |
+| Pre-condizioni  | -                                                                                                             |
+| Post-condizioni | - è stata eliminata la lista precedente relativa all'idTavolo ed è stata inserita con successo la lista nuova |
 
 # Iterazione 4, Progettazione
 
