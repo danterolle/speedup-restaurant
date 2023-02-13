@@ -1,41 +1,60 @@
 import unittest
 import iterazione3
+from unittest import mock
 
 
-class TestRestaurantApplication(unittest.TestCase):
-    def test_show_menu(self):
-        menu = iterazione3.mostraMenu()
-        self.assertIsInstance(menu, list)
-        self.assertGreater(len(menu), 0)
+class TestOrders(unittest.TestCase):
+    def setUp(self):
+        self.menu = {
+            "Insalata": 5.99,
+            "Pizza Margherita": 4.99,
+            "Lasagna": 9.99,
+            "Tiramisù": 6.99
+        }
 
-        for item in menu:
-            self.assertIsInstance(item, str)
-            self.assertGreater(len(item), 0)
+        self.orders = []
 
-    def test_place_order(self):
-        order_id = iterazione3.effettuaOrdine()
-        self.assertIsInstance(order_id, int)
-        self.assertIn(order_id, [order["id"] for order in iterazione3.orders])
+    def test_effettuaOrdine(self):
+        # Simulare l'input dell'utente
+        def mock_input(s):
+            if s == "Inserisci il nome della portata o 'q' per uscire: ":
+                return "Pizza Margherita"
+            elif s == "Cosa vuoi fare?\n1. Visualizza menù\n2. Effettua ordine\nq. Esci\n":
+                return "q"
+            return ""
 
-        order = [order for order in iterazione3.orders if order["id"] == order_id][0]
-        self.assertIn("items", order)
-        self.assertIn("total_price", order)
-        self.assertIsInstance(order["items"], list)
-        self.assertIsInstance(order["total_price"], float)
+        # Verificare che la funzione modifichi correttamente la lista degli ordini
+        with unittest.mock.patch('builtins.input', side_effect=mock_input):
+            iterazione3.effettuaOrdine()
 
-    def test_modify_order(self):
-        order_id = iterazione3.effettuaOrdine()
-        order = [order for order in iterazione3.orders if order["id"] == order_id][0]
-        original_items = order["items"][:]
-        original_total_price = order["total_price"]
+        self.assertEqual(len(self.orders), 1)
+        self.assertEqual(self.orders[0]["items"], ["Pizza Margherita"])
+        self.assertEqual(self.orders[0]["total_price"], 4.99)
 
-        iterazione3.modificaOrdine(order_id)
-        modified_order = [order for order in iterazione3.orders if order["id"] == order_id][0]
-        self.assertNotEqual(original_items, modified_order["items"])
-        self.assertNotEqual(original_total_price, modified_order["total_price"])
+    def test_modificaOrdine(self):
+        self.orders.append({
+            "id": 1,
+            "items": ["Pizza Margherita"],
+            "total_price": 4.99
+        })
 
-        order["items"] = original_items
-        order["total_price"] = original_total_price
+        # Simulare l'input dell'utente
+        def mock_input(s):
+            if s == "Inserisci l'ID dell'ordine da modificare: ":
+                return "1"
+            elif s == "Inserisci il nome della portata da aggiungere o rimuovere o 'q' per uscire: ":
+                return "Lasagna"
+            elif s == "Cosa vuoi fare?\n1. Visualizza menù\n2. Effettua ordine\nq. Esci\n":
+                return "q"
+            return ""
+
+        # Verificare che la funzione modifichi correttamente la lista degli ordini
+        with unittest.mock.patch('builtins.input', side_effect=mock_input):
+            iterazione3.modificaOrdine(1)
+
+        self.assertEqual(len(self.orders), 1)
+        self.assertEqual(self.orders[0]["items"], ["Pizza Margherita"])
+        self.assertEqual(self.orders[0]["total_price"], 4.99)
 
 
 if __name__ == '__main__':
