@@ -20,10 +20,9 @@ class TestModificaPrenotazione(unittest.TestCase):
     def test_modificaPrenotazione(self):
         prenotazione = iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "10/02/2022", "18:00")
         iterazione2.modificaPrenotazione(prenotazione)
-
-        self.assertEqual(prenotazione.num_persone, "nuovo_numero_persone")
-        self.assertEqual(prenotazione.data, "nuova_data")
-        self.assertEqual(prenotazione.ora, "nuova_ora_completa")
+        self.assertEqual(prenotazione.num_persone, "10")
+        self.assertEqual(prenotazione.data, "10/02/2022")
+        self.assertEqual(prenotazione.ora, "19:10:00")
 
 
 if __name__ == '__main__':
