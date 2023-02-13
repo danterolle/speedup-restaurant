@@ -45,7 +45,7 @@ def confermaPrenotazione(prenotazione):
     prenotazione.generaCodiceQR()
     prenotazione.inviaEmail()
     print("La tua prenotazione è stata registrata con successo!")
-    print("Ti abbiamo inviato il codice QR alla tua email.")
+    print("Abbiamo inviato il codice QR alla tua email.")
 
 
 def getPrenotazione():
