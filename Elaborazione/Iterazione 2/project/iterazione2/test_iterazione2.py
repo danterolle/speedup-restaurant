@@ -5,7 +5,7 @@ import iterazione2
 class TestGetPrenotazione(unittest.TestCase):
     def setUp(self):
         self.prenotazioni = [
-            iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "01/02/2022", "12:00"),
+            iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "06/02/2022", "12:00"),
             iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "02/10/2022", "13:00"),
             iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "15/03/2022", "14:00"),
         ]

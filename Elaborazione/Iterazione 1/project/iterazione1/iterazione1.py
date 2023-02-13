@@ -6,7 +6,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 
 
-# TODO: Scrivere delle unit test
 class Prenotazione:
     def __init__(self, email, num_telefono, nome, cognome, num_persone, data, ora):
         self.email = email

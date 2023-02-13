@@ -1,7 +1,6 @@
 import datetime
 
 
-# TODO: Scrivere delle unit test
 class Prenotazione:
     prenotazioni = []
 
