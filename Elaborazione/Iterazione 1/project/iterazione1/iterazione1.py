@@ -7,9 +7,9 @@ from email.mime.image import MIMEImage
 
 # TODO: Scrivere delle unit test
 class Prenotazione:
-    def __init__(self, email, numero_telefono, nome, cognome, num_persone, data, ora):
+    def __init__(self, email, num_telefono, nome, cognome, num_persone, data, ora):
         self.email = email
-        self.numero_telefono = numero_telefono
+        self.num_telefono = num_telefono
         self.nome = nome
         self.cognome = cognome
         self.num_persone = num_persone
@@ -25,7 +25,7 @@ class Prenotazione:
 
         dati = f"Nome: {self.nome}" \
                f"Cognome: {self.cognome} " \
-               f"Numero di telefono: {self.numero_telefono} " \
+               f"Numero di telefono: {self.num_telefono} " \
                f"Numero di persone: {self.num_persone} " \
                f"Data: {self.data} " \
                f"Ora: {self.ora}"
@@ -62,13 +62,13 @@ class Prenotazione:
 
 def inserimentoPrenotazione():
     email = input("Inserisci la tua email: ")
-    numero_telefono = input("Inserisci il tuo numero di telefono: ")
+    num_telefono = input("Inserisci il tuo numero di telefono: ")
     nome = input("Inserisci il tuo nome: ")
     cognome = input("Inserisci il tuo cognome: ")
     num_persone = input("Inserisci il numero di persone: ")
     data = input("Inserisci la data (GG/MM/AAAA): ")
     ora = input("Inserisci l'ora (HH:MM): ")
-    prenotazione = Prenotazione(email, numero_telefono, nome, cognome, num_persone, data, ora)
+    prenotazione = Prenotazione(email, num_telefono, nome, cognome, num_persone, data, ora)
 
     return prenotazione
 
