@@ -14,7 +14,7 @@ class TestOrders(unittest.TestCase):
 
         self.orders = []
 
-    def test_effettuaOrdine(self):
+    def test_inserimentoPortata(self):
         def mock_input(s):
             if s == "Inserisci il nome della portata o 'q' per uscire: ":
                 return "Pizza Margherita"
