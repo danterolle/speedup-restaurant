@@ -53,6 +53,9 @@ class Prenotazione:
             img = MIMEImage(f.read())
             msg.attach(img)
 
+        # Questo è solo un esempio.
+        # Dal 2022, Gmail non permette di inviare email da client considerati non sicuri,
+        # useremo Flask e qualche libreria esterna per sistemare il problema.
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
         server.login("email@gmail.com", "password")

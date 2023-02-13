@@ -5,47 +5,51 @@ import datetime
 class Prenotazione:
     prenotazioni = []
 
-    def __init__(self, email, numero_telefono, nome, cognome, numero_persone, data, ora):
+    def __init__(self, email, num_telefono, nome, cognome, num_persone, data, ora):
         self.email = email
-        self.numero_telefono = numero_telefono
+        self.num_telefono = num_telefono
         self.nome = nome
         self.cognome = cognome
-        self.numero_persone = numero_persone
+        self.num_persone = num_persone
         self.data = data
         self.ora = ora
-        self.codice_QR = None
         Prenotazione.prenotazioni.append(self)
 
-    def genera_codice_QR(self):
+    def generaCodiceQR(self):
         # Implementazione della generazione del codice QR, vedere iterazione 1
         pass
 
-    def invia_email(self):
+    def inviaEmail(self):
         # Implementazione dell'invio dell'email, vedere iterazione 1
         pass
 
 
-def inserimento_prenotazione():
+def inserimentoPrenotazione():
     email = input("Inserisci la tua email: ")
-    numero_telefono = input("Inserisci il tuo numero di telefono: ")
+    num_telefono = input("Inserisci il tuo numero di telefono: ")
     nome = input("Inserisci il tuo nome: ")
     cognome = input("Inserisci il tuo cognome: ")
-    numero_persone = input("Inserisci il numero di persone: ")
+    num_persone = input("Inserisci il numero di persone: ")
     data = input("Inserisci la data (GG/MM/AAAA): ")
     ora = input("Inserisci l'ora (HH:MM): ")
 
-    prenotazione = Prenotazione(email, numero_telefono, nome, cognome, numero_persone, data, ora)
+    ora_completa = f"{ora}:00"
+    data_ora = f"{data} {ora_completa}"
+    data_ora_prenotazione = datetime.datetime.strptime(data_ora, '%d/%m/%Y %H:%M:%S')
+
+    prenotazione = Prenotazione(email, num_telefono, nome, cognome, num_persone, data_ora_prenotazione.date(),
+                                data_ora_prenotazione.time())
     return prenotazione
 
 
-def conferma_prenotazione(prenotazione):
-    prenotazione.genera_codice_QR()
-    prenotazione.invia_email()
+def confermaPrenotazione(prenotazione):
+    prenotazione.generaCodiceQR()
+    prenotazione.inviaEmail()
     print("La tua prenotazione è stata registrata con successo!")
     print("Ti abbiamo inviato il codice QR alla tua email.")
 
 
-def get_prenotazione():
+def getPrenotazione():
     print("Queste sono le tue prenotazioni:")
     for i, prenotazione in enumerate(Prenotazione.prenotazioni):
         print(f"{i + 1}. Prenotazione del {prenotazione.data} alle {prenotazione.ora}")
@@ -53,20 +57,17 @@ def get_prenotazione():
     return Prenotazione.prenotazioni[scelta - 1]
 
 
-def modifica_prenotazione(prenotazione):
-    data_ora_attuale = datetime.datetime.now()
-    # TODO: AttributeError: 'Prenotazione' object has no attribute 'data_ora'
-    data_ora_prenotazione = datetime.datetime.strptime(prenotazione.data_ora, '%Y-%m-%d %H:%M:%S')
-    if (data_ora_prenotazione - data_ora_attuale).total_seconds() <= 7200:
-        nuovo_numero_persone = input("Inserisci il nuovo numero di persone: ")
-        prenotazione.numero_persone = nuovo_numero_persone
+def modificaPrenotazione(prenotazione):
+    nuovo_numero_persone = input("Inserisci il nuovo numero di persone: ")
+    prenotazione.num_persone = nuovo_numero_persone
 
-        nuova_data_ora = input("Inserisci la nuova data e ora (YYYY-MM-DD HH:MM:SS): ")
-        prenotazione.data_ora = nuova_data_ora
+    nuova_data = input("Inserisci la nuova data (GG/MM/AAAA): ")
+    nuova_ora = input("Inserisci la nuova ora (HH:MM): ")
+    nuova_ora_completa = f"{nuova_ora}:00"
+    nuova_data_ora = f"{nuova_data} {nuova_ora_completa}"
 
-        print("La prenotazione è stata modificata con successo.")
-    else:
-        print("Non è possibile modificare questa prenotazione.")
+    prenotazione.data, prenotazione.ora = nuova_data_ora.split(" ")
+    print("La prenotazione è stata modificata con successo.")
 
 
 def main():
@@ -77,12 +78,12 @@ def main():
         print("3. Esci")
         scelta = input("Scegli un'opzione: ")
         if scelta == "1":
-            prenotazione = inserimento_prenotazione()
+            prenotazione = inserimentoPrenotazione()
             prenotazioni.append(prenotazione)
         elif scelta == "2":
-            prenotazione_da_modificare = get_prenotazione()
+            prenotazione_da_modificare = getPrenotazione()
             if prenotazione_da_modificare is not None:
-                modifica_prenotazione(prenotazione_da_modificare)
+                modificaPrenotazione(prenotazione_da_modificare)
         elif scelta == "3":
             break
 
