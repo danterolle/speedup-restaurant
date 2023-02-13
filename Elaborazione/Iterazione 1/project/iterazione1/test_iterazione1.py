@@ -1,11 +1,22 @@
 import unittest
 from unittest.mock import patch
 import iterazione1
+from PIL import Image
+import pyzbar.pyzbar as pyzbar
+# Install Pillow, pyzbar (brew install zbar for its shared lib)
 
 
 class TestInserimentoPrenotazione(unittest.TestCase):
-    @patch('builtins.input', side_effect=['test@example.com', '1234567890', 'Name', 'Surname', '4', '12/02/2023', '12'
-                                                                                                                  ':00'])
+    @patch('builtins.input',
+           side_effect=[
+               'test@example.com',
+               '1234567890',
+               'Name',
+               'Surname',
+               '4',
+               '12/02/2023',
+               '12:00'
+           ])
     def test_inserimentoPrenotazione(self, input_mock):
         prenotazione = iterazione1.inserimentoPrenotazione()
         self.assertEqual(prenotazione.email, 'test@example.com')
@@ -17,44 +28,32 @@ class TestInserimentoPrenotazione(unittest.TestCase):
         self.assertEqual(prenotazione.ora, '12:00')
 
 
-class TestGeneraCodiceQR(unittest.TestCase):
-    def setUp(self):
-        self.nome = "Mario"
-        self.cognome = "Rossi"
-        self.num_telefono = "1234567890"
-        self.num_persone = 4
-        self.data = "12/02/2023"
-        self.ora = "12:00"
-
-    @patch("qrcode.QRCode")
-    def test_generaCodiceQR(self, mock_qrcode):
-        prenotazione = iterazione1.Prenotazione(self.nome,
-                                                self.cognome,
-                                                self.num_telefono,
-                                                self.num_persone,
-                                                self.data,
-                                                self.ora,
-                                                self.ora
-                                                )
-
+class TestCodiceQRPrenotazione(unittest.TestCase):
+    def test_generaCodiceQR(self):
+        prenotazione = iterazione1.Prenotazione(
+            email="test@example.com",
+            num_telefono="1234567890",
+            nome="Name",
+            cognome="Surname",
+            num_persone=4,
+            data="12/02/2023",
+            ora="12:00"
+        )
         prenotazione.generaCodiceQR()
 
-        mock_qrcode.assert_called_once_with(
-            version=1,
-            box_size=10,
-            border=5
-        )
+        img = Image.open(f"{prenotazione.nome}_{prenotazione.cognome}.png")
+        self.assertIsNotNone(img)
 
-        dati = "Nome: " + self.nome + \
-               "Cognome: " + self.cognome + \
-               "Numero di telefono: " + self.num_telefono + \
-               "Numero di persone: " + str(self.num_persone) + \
-               "Data: " + self.data + \
-               "Ora: " + self.ora
-
-        mock_qrcode.return_value.add_data.assert_called_once_with(dati)
-        mock_qrcode.return_value.make.assert_called_once_with(fit=True)
-        mock_qrcode.return_value.make_image.assert_called_once_with(fill_color="black", back_color="white")
+        decoded = pyzbar.decode(img)
+        self.assertEqual(len(decoded), 1)
+        decoded_data = decoded[0].data.decode("utf-8")
+        expected_data = f"Nome: {prenotazione.nome}" \
+                        f"Cognome: {prenotazione.cognome} " \
+                        f"Numero di telefono: {prenotazione.num_telefono} " \
+                        f"Numero di persone: {prenotazione.num_persone} " \
+                        f"Data: {prenotazione.data} " \
+                        f"Ora: {prenotazione.ora}"
+        self.assertEqual(decoded_data, expected_data)
 
 
 if __name__ == '__main__':
