@@ -68,7 +68,7 @@ def modificaOrdine(order_id):
             order["total_price"] = total_price
             print(f"\nIl tuo ordine (ID: {order_id}) è stato modificato con successo:")
             print(f"Portate: {', '.join(order_list)}")
-            print(f"Prezzo totale: ${total_price:.2f}")
+            print(f"Prezzo totale: €{total_price:.2f}")
             return
         print(f"Non è stato trovato alcun ordine con ID {order_id}.")
 
@@ -85,8 +85,6 @@ def main():
         elif choice == '3':
             order_id = int(input("Inserisci l'ID dell'ordine da modificare: "))
             modificaOrdine(order_id)
-        elif choice == '4':
-            break
         else:
             print("Opzione non valida.")
 
