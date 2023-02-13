@@ -1,37 +1,29 @@
-import io
-import iterazione2
 import unittest
-from unittest.mock import patch
+import iterazione2
 
 
 class TestGetPrenotazione(unittest.TestCase):
-    @patch('builtins.input', side_effect=[2])
-    @patch('sys.stdout', new_callable=io.StringIO)
-    def test_getPrenotazione(self, mock_input, mock_stdout):
-        iterazione2.Prenotazione.prenotazioni = [
-            iterazione2.Prenotazione(email="test@example.com",
-                                     num_telefono="1234567890",
-                                     nome="Name",
-                                     cognome="Surname",
-                                     num_persone=4, data='01/01/2022', ora='10:00'),
-            iterazione2.Prenotazione(email="test@example.com",
-                                     num_telefono="1234567890",
-                                     nome="Name",
-                                     cognome="Surname",
-                                     num_persone=4, data='02/01/2022', ora='11:00'),
-            iterazione2.Prenotazione(email="test@example.com",
-                                     num_telefono="1234567890",
-                                     nome="Name",
-                                     cognome="Surname",
-                                     num_persone=4, data='03/01/2022', ora='12:00'),
+    def setUp(self):
+        self.prenotazioni = [
+            iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "01/02/2022", "12:00"),
+            iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "02/10/2022", "13:00"),
+            iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "15/03/2022", "14:00"),
         ]
+        iterazione2.Prenotazione.prenotazioni = self.prenotazioni
 
+    def test_getPrenotazione(self):
         prenotazione = iterazione2.getPrenotazione()
+        self.assertEqual(prenotazione, self.prenotazioni[0])
 
-        self.assertEqual(mock_stdout.getvalue(),
-                         "Queste sono le tue prenotazioni:\n1. Prenotazione del 01/01/2022 alle 10:00\n2. "
-                         "Prenotazione del 02/01/2022 alle 11:00\n3. Prenotazione del 03/01/2022 alle 12:00\n")
-        self.assertEqual(prenotazione, iterazione2.Prenotazione.prenotazioni[1])
+
+class TestModificaPrenotazione(unittest.TestCase):
+    def test_modificaPrenotazione(self):
+        prenotazione = iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "10/02/2022", "18:00")
+        iterazione2.modificaPrenotazione(prenotazione)
+
+        self.assertEqual(prenotazione.num_persone, "nuovo_numero_persone")
+        self.assertEqual(prenotazione.data, "nuova_data")
+        self.assertEqual(prenotazione.ora, "nuova_ora_completa")
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 import qrcode
 import smtplib
+import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
@@ -71,8 +72,12 @@ def inserimentoPrenotazione():
     num_persone = input("Inserisci il numero di persone: ")
     data = input("Inserisci la data (GG/MM/AAAA): ")
     ora = input("Inserisci l'ora (HH:MM): ")
-    prenotazione = Prenotazione(email, num_telefono, nome, cognome, num_persone, data, ora)
+    ora_completa = f"{ora}:00"
+    data_ora = f"{data} {ora_completa}"
+    data_ora_prenotazione = datetime.datetime.strptime(data_ora, '%d/%m/%Y %H:%M:%S')
 
+    prenotazione = Prenotazione(email, num_telefono, nome, cognome, num_persone, data_ora_prenotazione.date(),
+                                data_ora_prenotazione.time())
     return prenotazione
 
 
