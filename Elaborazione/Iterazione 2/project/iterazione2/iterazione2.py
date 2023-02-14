@@ -1,6 +1,7 @@
 import datetime
 
 
+# Pattern Command
 class Prenotazione:
     prenotazioni = []
 
@@ -23,68 +24,110 @@ class Prenotazione:
         pass
 
 
-def inserimentoPrenotazione():
-    email = input("Inserisci la tua email: ")
-    num_telefono = input("Inserisci il tuo numero di telefono: ")
-    nome = input("Inserisci il tuo nome: ")
-    cognome = input("Inserisci il tuo cognome: ")
-    num_persone = input("Inserisci il numero di persone: ")
-    data = input("Inserisci la data (GG/MM/AAAA): ")
-    ora = input("Inserisci l'ora (HH:MM): ")
-
-    ora_completa = f"{ora}:00"
-    data_ora = f"{data} {ora_completa}"
-    data_ora_prenotazione = datetime.datetime.strptime(data_ora, '%d/%m/%Y %H:%M:%S')
-
-    prenotazione = Prenotazione(email, num_telefono, nome, cognome, num_persone, data_ora_prenotazione.date(),
-                                data_ora_prenotazione.time())
-    return prenotazione
+class Command:
+    def execute(self):
+        pass
 
 
-def confermaPrenotazione(prenotazione):
-    prenotazione.generaCodiceQR()
-    prenotazione.inviaEmail()
-    print("La tua prenotazione è stata registrata con successo!")
-    print("Abbiamo inviato il codice QR alla tua email.")
+class InserimentoPrenotazioneCommand(Command):
+    def execute(self):
+        email = input("Inserisci la tua email: ")
+        num_telefono = input("Inserisci il tuo numero di telefono: ")
+        nome = input("Inserisci il tuo nome: ")
+        cognome = input("Inserisci il tuo cognome: ")
+        num_persone = input("Inserisci il numero di persone: ")
+        data = input("Inserisci la data (GG/MM/AAAA): ")
+        ora = input("Inserisci l'ora (HH:MM): ")
+
+        ora_completa = f"{ora}:00"
+        data_ora = f"{data} {ora_completa}"
+        data_ora_prenotazione = datetime.datetime.strptime(data_ora, '%d/%m/%Y %H:%M:%S')
+
+        prenotazione = Prenotazione(email, num_telefono, nome, cognome, num_persone, data_ora_prenotazione.date(),
+                                    data_ora_prenotazione.time())
+        return prenotazione
 
 
-def getPrenotazione():
-    print("Queste sono le tue prenotazioni:")
-    for i, prenotazione in enumerate(Prenotazione.prenotazioni):
-        print(f"{i + 1}. Prenotazione del {prenotazione.data} alle {prenotazione.ora}")
-    scelta = int(input("Scegli la prenotazione che vuoi modificare (inserisci il numero): "))
-    return Prenotazione.prenotazioni[scelta - 1]
+class ConfermaPrenotazioneCommand(Command):
+    def __init__(self, prenotazione):
+        self.prenotazione = prenotazione
+
+    def execute(self):
+        self.prenotazione.generaCodiceQR()
+        self.prenotazione.inviaEmail()
+        print("La tua prenotazione è stata registrata con successo!")
+        print("Abbiamo inviato il codice QR alla tua email.")
 
 
-def modificaPrenotazione(prenotazione):
-    nuovo_numero_persone = input("Inserisci il nuovo numero di persone: ")
-    prenotazione.num_persone = nuovo_numero_persone
+class ModificaPrenotazioneCommand(Command):
+    def __init__(self, prenotazione):
+        self.prenotazione = prenotazione
 
-    nuova_data = input("Inserisci la nuova data (GG/MM/AAAA): ")
-    nuova_ora = input("Inserisci la nuova ora (HH:MM): ")
-    nuova_ora_completa = f"{nuova_ora}:00"
-    nuova_data_ora = f"{nuova_data} {nuova_ora_completa}"
+    def execute(self):
+        nuovo_numero_persone = input("Inserisci il nuovo numero di persone: ")
+        self.prenotazione.num_persone = nuovo_numero_persone
 
-    prenotazione.data, prenotazione.ora = nuova_data_ora.split(" ")
-    print("La prenotazione è stata modificata con successo.")
+        nuova_data = input("Inserisci la nuova data (GG/MM/AAAA): ")
+        nuova_ora = input("Inserisci la nuova ora (HH:MM): ")
+        nuova_ora_completa = f"{nuova_ora}:00"
+        nuova_data_ora = f"{nuova_data} {nuova_ora_completa}"
+
+        self.prenotazione.data, self.prenotazione.ora = nuova_data_ora.split(" ")
+        print("La prenotazione è stata modificata con successo.")
+
+
+class GetPrenotazioneCommand(Command):
+    def execute(self):
+        email = input("Inserisci la tua email per recuperare la prenotazione: ")
+        num_telefono = input("Inserisci il tuo numero di telefono: ")
+
+        for prenotazione in Prenotazione.prenotazioni:
+            if prenotazione.email == email and prenotazione.num_telefono == num_telefono:
+                print(f"Ecco i dettagli della tua prenotazione: {prenotazione.__dict__}")
+                break
+        else:
+            print("Nessuna prenotazione trovata per queste credenziali.")
 
 
 def main():
-    prenotazioni = []
     while True:
-        print("1. Prenota un tavolo")
-        print("2. Modifica una prenotazione")
-        print("3. Esci")
-        scelta = input("Scegli un'opzione: ")
+        print("Cosa vuoi fare?")
+        print("1. Prenotare un tavolo")
+        print("2. Confermare una prenotazione")
+        print("3. Modificare una prenotazione")
+        print("4. Elencare le tue prenotazioni")
+        print("5. Esci")
+
+        scelta = input()
+
         if scelta == "1":
-            prenotazione = inserimentoPrenotazione()
-            prenotazioni.append(prenotazione)
+            command = InserimentoPrenotazioneCommand()
         elif scelta == "2":
-            prenotazione_da_modificare = getPrenotazione()
-            if prenotazione_da_modificare is not None:
-                modificaPrenotazione(prenotazione_da_modificare)
+            prenotazione = GetPrenotazioneCommand()
+            if prenotazione is not None:
+                command = ConfermaPrenotazioneCommand(prenotazione)
+            else:
+                print("Prenotazione non trovata.")
+                continue
         elif scelta == "3":
+            prenotazione = GetPrenotazioneCommand()
+            if prenotazione is not None:
+                command = ModificaPrenotazioneCommand(prenotazione)
+            else:
+                print("Prenotazione non trovata.")
+                continue
+        elif scelta == "4":
+            command = GetPrenotazioneCommand()
+        elif scelta == "5":
             break
+        else:
+            print("Scelta non valida.")
+            continue
+
+        prenotazione = command.execute()
+
+        if prenotazione is not None:
+            InserimentoPrenotazioneCommand(prenotazione)
 
 
 if __name__ == "__main__":

@@ -6,6 +6,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 
 
+# Pattern Singleton
 class Prenotazione:
     _instance = None
 
