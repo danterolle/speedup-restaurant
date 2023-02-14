@@ -45,6 +45,7 @@ class inserimentoPrenotazione(Command):
 
         prenotazione = Prenotazione(email, num_telefono, nome, cognome, num_persone, data_ora_prenotazione.date(),
                                     data_ora_prenotazione.time())
+        print("Prenotazione aggiunta con successo.")
         return prenotazione
 
 
@@ -64,15 +65,20 @@ class modificaPrenotazione(Command):
         self.prenotazione = prenotazione
 
     def execute(self):
-        nuovo_numero_persone = input("Inserisci il nuovo numero di persone: ")
-        self.prenotazione.num_persone = nuovo_numero_persone
+        email = input("Inserisci la tua email per recuperare la prenotazione: ")
+        num_telefono = input("Inserisci il tuo numero di telefono: ")
+        for prenotazione in Prenotazione.prenotazioni:
+            if prenotazione.email == email and prenotazione.num_telefono == num_telefono:
+                nuovo_numero_persone = input("Inserisci il nuovo numero di persone: ")
+                self.prenotazione.num_persone = nuovo_numero_persone
 
-        nuova_data = input("Inserisci la nuova data (GG/MM/AAAA): ")
-        nuova_ora = input("Inserisci la nuova ora (HH:MM): ")
-        nuova_ora_completa = f"{nuova_ora}:00"
-        nuova_data_ora = f"{nuova_data} {nuova_ora_completa}"
+                nuova_data = input("Inserisci la nuova data (GG/MM/AAAA): ")
+                nuova_ora = input("Inserisci la nuova ora (HH:MM): ")
+                nuova_ora_completa = f"{nuova_ora}:00"
+                nuova_data_ora = f"{nuova_data} {nuova_ora_completa}"
 
-        self.prenotazione.data, self.prenotazione.ora = nuova_data_ora.split(" ")
+                self.prenotazione.data, self.prenotazione.ora = nuova_data_ora.split(" ")
+                return prenotazione
         print("La prenotazione è stata modificata con successo.")
 
 
@@ -92,10 +98,10 @@ class getPrenotazione(Command):
 def main():
     while True:
         print("Cosa vuoi fare?")
-        print("1. Prenotare un tavolo")
-        print("2. Confermare una prenotazione")
-        print("3. Modificare una prenotazione")
-        print("4. Elencare le tue prenotazioni")
+        print("1. Prenota un tavolo")
+        print("2. Conferma una prenotazione")
+        print("3. Modifica una prenotazione")
+        print("4. Elenca le tue prenotazioni")
         print("q. Esci")
 
         scelta = input()
