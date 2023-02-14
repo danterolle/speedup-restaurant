@@ -1,20 +1,48 @@
-menu = {
-    "Insalata": 5.99,
-    "Pizza Margherita": 4.99,
-    "Lasagna": 9.99,
-    "Tiramisù": 6.99
-}
+# Pattern Singleton
+class Menu:
+    _instance = None
 
-orders = []
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._menu = {
+                "Insalata": 5.99,
+                "Pizza Margherita": 4.99,
+                "Lasagna": 9.99,
+                "Tiramisù": 6.99
+            }
+        return cls._instance
+
+    def getMenu(self):
+        return self._menu
+
+
+class Ordine:
+    _orders = []
+
+    def aggiungiPortata(self, items, total_price):
+        order_id = len(self._orders) + 1
+        order = {
+            "id": order_id,
+            "items": items,
+            "total_price": total_price
+        }
+        self._orders.append(order)
+        return order_id
+
+    def getOrdine(self):
+        return self._orders
 
 
 def mostraMenu():
-    print("Menù:")
+    menu = Menu().getMenu()
+    print("Menù: ")
     for item, price in menu.items():
-        print(f"{item}: ${price:.2f}")
+        print(f"{item}: €{price:.2f}")
 
 
 def inserimentoPortata():
+    menu = Menu().getMenu()
     print("\nEffettua il tuo ordine:")
     order_list = []
     total_price = 0
@@ -31,16 +59,10 @@ def inserimentoPortata():
     if not order_list:
         print("Non hai effettuato alcun ordine.")
         return
-    order_id = len(orders) + 1
-    order = {
-        "id": order_id,
-        "items": order_list,
-        "total_price": total_price
-    }
-    orders.append(order)
+    order_id = Ordine().aggiungiPortata(order_list, total_price)
     print(f"\nIl tuo ordine (ID: {order_id}) è stato registrato con successo:")
     print(f"Portate: {', '.join(order_list)}")
-    print(f"Prezzo totale: ${total_price:.2f}")
+    print(f"Prezzo totale: €{total_price:.2f}")
 
 
 def main():

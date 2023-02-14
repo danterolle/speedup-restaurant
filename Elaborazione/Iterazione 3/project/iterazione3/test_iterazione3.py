@@ -1,34 +1,55 @@
 import unittest
-from unittest import mock
-import iterazione3
+from io import StringIO
+from unittest.mock import patch
+from iterazione3 import Menu, Ordine, mostraMenu, inserimentoPortata
 
 
-class TestOrders(unittest.TestCase):
-    def setUp(self):
-        self.menu = {
-            "Insalata": 5.99,
-            "Pizza Margherita": 4.99,
-            "Lasagna": 9.99,
-            "Tiramisù": 6.99
-        }
+class TestMenu(unittest.TestCase):
+    def test_singleton(self):
+        menu1 = Menu()
+        menu2 = Menu()
+        self.assertIs(menu1, menu2)
 
-        self.orders = []
+    def test_getMenu(self):
+        menu = Menu().getMenu()
+        self.assertEqual(len(menu), 4)
+        self.assertEqual(menu["Insalata"], 5.99)
+        self.assertEqual(menu["Pizza Margherita"], 4.99)
+        self.assertEqual(menu["Lasagna"], 9.99)
+        self.assertEqual(menu["Tiramisù"], 6.99)
+
+
+class TestOrdine(unittest.TestCase):
+    def test_aggiungiPortata(self):
+        order = Ordine()
+        order_id = order.aggiungiPortata(["Insalata", "Lasagna"], 15.98)
+        orders = order.getOrdine()
+        self.assertEqual(len(orders), 1)
+        self.assertEqual(orders[0]["id"], order_id)
+        self.assertEqual(orders[0]["items"], ["Insalata", "Lasagna"])
+        self.assertEqual(orders[0]["total_price"], 15.98)
+
+
+class TestGestioneOrdine(unittest.TestCase):
+    def test_mostraMenu(self):
+        Menu()
+        with patch('sys.stdout', new=StringIO()) as fake_output:
+            mostraMenu()
+            self.assertIn("Insalata: €5.99", fake_output.getvalue())
 
     def test_inserimentoPortata(self):
-        def mock_input(s):
-            if s == "Inserisci il nome della portata o 'q' per uscire: ":
-                return "Pizza Margherita"
-            elif s == "Cosa vuoi fare?\n1. Visualizza menù\n2. Effettua ordine\nq. Esci\n":
-                return "q"
-            return ""
+        Menu()
+        with patch('builtins.input', side_effect=['Insalata', 'Lasagna', 'q']):
+            with patch('sys.stdout', new=StringIO()) as fake_output:
+                inserimentoPortata()
+                self.assertIn("Il tuo ordine (ID: 1) è stato registrato con successo:", fake_output.getvalue())
+                self.assertIn("Insalata, Lasagna", fake_output.getvalue())
+                self.assertIn("Prezzo totale: €15.98", fake_output.getvalue())
 
-        # Verificare che la funzione modifichi correttamente la lista degli ordini
-        with unittest.mock.patch('builtins.input', side_effect=mock_input):
-            iterazione3.inserimentoPortata()
-
-        self.assertEqual(len(self.orders), 1)
-        self.assertEqual(self.orders[0]["items"], ["Pizza Margherita"])
-        self.assertEqual(self.orders[0]["total_price"], 4.99)
+        order = Ordine().getOrdine()[0]
+        self.assertEqual(order["id"], 1)
+        self.assertEqual(order["items"], ["Insalata", "Lasagna"])
+        self.assertEqual(order["total_price"], 15.98)
 
 
 if __name__ == '__main__':
