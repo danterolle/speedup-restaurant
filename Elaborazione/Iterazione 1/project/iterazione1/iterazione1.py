@@ -7,6 +7,13 @@ from email.mime.image import MIMEImage
 
 
 class Prenotazione:
+    _instance = None
+
+    def __new__(cls, email, num_telefono, nome, cognome, num_persone, data, ora):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
     def __init__(self, email, num_telefono, nome, cognome, num_persone, data, ora):
         self.email = email
         self.num_telefono = num_telefono
