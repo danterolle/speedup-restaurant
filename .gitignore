@@ -2,3 +2,6 @@
 .venv
 venv/
 Elaborazione/Iterazione 1/project/iterazione1/*.png
+Elaborazione/Iterazione 2/project/iterazione2/*.png
+.DS_Store
+__pycache__
