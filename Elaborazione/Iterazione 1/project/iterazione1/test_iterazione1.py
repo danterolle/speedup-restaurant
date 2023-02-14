@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-import iterazione1
+from iterazione1 import Prenotazione, inserimentoPrenotazione
 from PIL import Image
 import pyzbar.pyzbar as pyzbar
 # Install Pillow, pyzbar (brew install zbar for its shared lib)
@@ -18,7 +18,7 @@ class TestInserimentoPrenotazione(unittest.TestCase):
                '12:00'
            ])
     def test_inserimentoPrenotazione(self, input_mock):
-        prenotazione = iterazione1.inserimentoPrenotazione()
+        prenotazione = inserimentoPrenotazione()
         self.assertEqual(prenotazione.email, 'test@example.com')
         self.assertEqual(prenotazione.num_telefono, '1234567890')
         self.assertEqual(prenotazione.nome, 'Name')
@@ -30,7 +30,7 @@ class TestInserimentoPrenotazione(unittest.TestCase):
 
 class TestCodiceQRPrenotazione(unittest.TestCase):
     def test_generaCodiceQR(self):
-        prenotazione = iterazione1.Prenotazione(
+        prenotazione = Prenotazione(
             email="test@example.com",
             num_telefono="1234567890",
             nome="Name",

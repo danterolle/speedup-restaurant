@@ -29,7 +29,7 @@ class Command:
         pass
 
 
-class InserimentoPrenotazioneCommand(Command):
+class inserimentoPrenotazione(Command):
     def execute(self):
         email = input("Inserisci la tua email: ")
         num_telefono = input("Inserisci il tuo numero di telefono: ")
@@ -48,7 +48,7 @@ class InserimentoPrenotazioneCommand(Command):
         return prenotazione
 
 
-class ConfermaPrenotazioneCommand(Command):
+class confermaPrenotazione(Command):
     def __init__(self, prenotazione):
         self.prenotazione = prenotazione
 
@@ -59,7 +59,7 @@ class ConfermaPrenotazioneCommand(Command):
         print("Abbiamo inviato il codice QR alla tua email.")
 
 
-class ModificaPrenotazioneCommand(Command):
+class modificaPrenotazione(Command):
     def __init__(self, prenotazione):
         self.prenotazione = prenotazione
 
@@ -76,7 +76,7 @@ class ModificaPrenotazioneCommand(Command):
         print("La prenotazione è stata modificata con successo.")
 
 
-class GetPrenotazioneCommand(Command):
+class getPrenotazione(Command):
     def execute(self):
         email = input("Inserisci la tua email per recuperare la prenotazione: ")
         num_telefono = input("Inserisci il tuo numero di telefono: ")
@@ -96,29 +96,29 @@ def main():
         print("2. Confermare una prenotazione")
         print("3. Modificare una prenotazione")
         print("4. Elencare le tue prenotazioni")
-        print("5. Esci")
+        print("q. Esci")
 
         scelta = input()
 
         if scelta == "1":
-            command = InserimentoPrenotazioneCommand()
+            command = inserimentoPrenotazione()
         elif scelta == "2":
-            prenotazione = GetPrenotazioneCommand()
+            prenotazione = getPrenotazione()
             if prenotazione is not None:
-                command = ConfermaPrenotazioneCommand(prenotazione)
+                command = confermaPrenotazione(prenotazione)
             else:
                 print("Prenotazione non trovata.")
                 continue
         elif scelta == "3":
-            prenotazione = GetPrenotazioneCommand()
+            prenotazione = getPrenotazione()
             if prenotazione is not None:
-                command = ModificaPrenotazioneCommand(prenotazione)
+                command = modificaPrenotazione(prenotazione)
             else:
                 print("Prenotazione non trovata.")
                 continue
         elif scelta == "4":
-            command = GetPrenotazioneCommand()
-        elif scelta == "5":
+            command = getPrenotazione()
+        elif scelta == "q":
             break
         else:
             print("Scelta non valida.")
@@ -127,7 +127,7 @@ def main():
         prenotazione = command.execute()
 
         if prenotazione is not None:
-            InserimentoPrenotazioneCommand(prenotazione)
+            inserimentoPrenotazione()
 
 
 if __name__ == "__main__":

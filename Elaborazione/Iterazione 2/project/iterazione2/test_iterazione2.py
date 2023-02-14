@@ -1,28 +1,29 @@
 import unittest
-import iterazione2
+import datetime
+from iterazione2 import Prenotazione, getPrenotazione, modificaPrenotazione
 
 
 class TestGetPrenotazione(unittest.TestCase):
-    def setUp(self):
-        self.prenotazioni = [
-            iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "06/02/2022", "12:00"),
-            iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "02/10/2022", "13:00"),
-            iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "15/03/2022", "14:00"),
-        ]
-        iterazione2.Prenotazione.prenotazioni = self.prenotazioni
+    def test_execute(self):
+        prenotazione = getPrenotazione().execute()
 
-    def test_getPrenotazione(self):
-        prenotazione = iterazione2.getPrenotazione()
-        self.assertEqual(prenotazione, self.prenotazioni[0])
+        self.assertIsInstance(prenotazione, Prenotazione)
+        self.assertEqual(prenotazione.email, "test@example.com")
+        self.assertEqual(prenotazione.num_telefono, "1234567890")
+        self.assertEqual(prenotazione.nome, "Mario")
+        self.assertEqual(prenotazione.cognome, "Rossi")
+        self.assertEqual(prenotazione.num_persone, "4")
+        self.assertEqual(prenotazione.data, datetime.date(2023, 2, 20))
+        self.assertEqual(prenotazione.ora, datetime.time(20, 30))
 
 
 class TestModificaPrenotazione(unittest.TestCase):
     def test_modificaPrenotazione(self):
-        prenotazione = iterazione2.Prenotazione("test@example.com", "1234567890", "Name", "Surname", 4, "10/02/2022", "18:00")
-        iterazione2.modificaPrenotazione(prenotazione)
-        self.assertEqual(prenotazione.num_persone, "10")
+        prenotazione = Prenotazione("test@example.com", "1234567890", "Name", "Surname", "4", "10/02/2022", "18:00")
+        modificaPrenotazione(prenotazione)
+        self.assertEqual(prenotazione.num_persone, "4")
         self.assertEqual(prenotazione.data, "10/02/2022")
-        self.assertEqual(prenotazione.ora, "19:10:00")
+        self.assertEqual(prenotazione.ora, "19:10")
 
 
 if __name__ == '__main__':
