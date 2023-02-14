@@ -1,7 +1,4 @@
 .idea
 .venv
 venv/
-
-# Flask stuff:
-instance/
-.webassets-cache
+Elaborazione/Iterazione 1/project/iterazione1/*.png
