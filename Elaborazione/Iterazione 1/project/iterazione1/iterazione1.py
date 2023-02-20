@@ -1,105 +1,124 @@
+import os
 import qrcode
+from flask import Flask, request, render_template
 import smtplib
-import datetime
-from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
+import mysql.connector
+
+app = Flask(__name__)
 
 
-# Pattern Singleton
+def generaCodiceQR(prenotazione):
+    """ Metodo che genera il codice QR a partire dalla prenotazione """
+    qr = qrcode.QRCode(version=1, box_size=10, border=5)
+    qr.add_data(str(prenotazione))
+    qr.make(fit=True)
+    img = qr.make_image(fill_color='black', back_color='white')
+    return img
+
+
+def inviaCodiceQR(email, prenotazione, qr):
+    """ Metodo che invia il codice QR all'email del Cliente """
+    # conversione dell'immagine in un allegato per l'email
+    img_bytes = qr.tobytes()
+    img_mime = MIMEImage(img_bytes)
+    img_mime.add_header('Content-ID', '<qr>')
+    img_mime.add_header('Content-Disposition', 'inline', filename='qr.png')
+
+    # creazione dell'email da inviare
+    msg = MIMEMultipart()
+    msg['From'] = os.environ.get('EMAIL_SENDER')
+    msg['To'] = email
+    msg['Subject'] = 'Codice QR della prenotazione'
+
+    text = f'Ciao {prenotazione["nome"]} {prenotazione["cognome"]},\n\n' \
+           f'Grazie per aver prenotato presso il nostro ristorante.\n' \
+           f'Qui trovi il codice QR della tua prenotazione:\n\n'
+    html = f'<html><body><p>Ciao {prenotazione["nome"]} {prenotazione["cognome"]},</p>' \
+           f'<p>Grazie per aver prenotato presso il nostro ristorante.</p>' \
+           f'<p>Qui trovi il codice QR della tua prenotazione:</p>' \
+           f'<img src="cid:qr"></body></html>'
+
+    text_part = MIMEText(text, 'plain')
+    html_part = MIMEText(html, 'html')
+
+    msg.attach(text_part)
+    msg.attach(html_part)
+    msg.attach(img_mime)
+
+    # invio dell'email
+    smtp = smtplib.SMTP(os.environ.get('EMAIL_HOST'), os.environ.get('EMAIL_PORT'))
+    smtp.starttls()
+    smtp.login(os.environ.get('EMAIL_SENDER'), os.environ.get('EMAIL_PASSWORD'))
+    smtp.send_message(msg)
+    smtp.quit()
+
+
+def confermaPrenotazione():
+    """ Metodo che indica di aver finito """
+    return "Prenotazione effettuata con successo!"
+
+
 class Prenotazione:
-    _instance = None
+    __instance = None
 
-    def __new__(cls, email, num_telefono, nome, cognome, num_persone, data, ora):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance
+    @staticmethod
+    def getInstance():
+        """ Metodo statico che restituisce l'istanza della Prenotazione """
+        if Prenotazione.__instance is None:
+            Prenotazione.__instance = Prenotazione()
+        return Prenotazione.__instance
 
-    def __init__(self, email, num_telefono, nome, cognome, num_persone, data, ora):
-        self.email = email
-        self.num_telefono = num_telefono
-        self.nome = nome
-        self.cognome = cognome
-        self.num_persone = num_persone
-        self.data = data
-        self.ora = ora
+    def __init__(self):
+        """ Costruttore che permette di creare una sola istanza """
+        if Prenotazione.__instance is not None:
+            raise Exception("Utilizzare il metodo getInstance() per ottenere l'istanza.")
+        else:
+            self.conn = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="dariodario",
+                database="speeduprestaurant"
+            )
+            self.cursor = self.conn.cursor()
 
-    def generaCodiceQR(self):
-        qr = qrcode.QRCode(
-            version=1,
-            box_size=10,
-            border=5
-        )
-
-        dati = f"Nome: {self.nome}" \
-               f"Cognome: {self.cognome} " \
-               f"Numero di telefono: {self.num_telefono} " \
-               f"Numero di persone: {self.num_persone} " \
-               f"Data: {self.data} " \
-               f"Ora: {self.ora}"
-
-        qr.add_data(dati)
-        qr.make(fit=True)
-        img = qr.make_image(fill_color="black", back_color="white")
-        img.save(f"{self.nome}_{self.cognome}.png")
-
-    def inviaEmail(self):
-        email = self.email
-        immagine = f"{self.nome}_{self.cognome}.png"
-        subject = "Codice QR per la tua prenotazione"
-        body = "Ecco il codice QR per la tua prenotazione."
-
-        msg = MIMEMultipart()
-        msg['from'] = "noreply@speeduprestaurant.com"
-        msg['to'] = email
-        msg['subject'] = subject
-
-        text = MIMEText(body)
-        msg.attach(text)
-
-        with open(immagine, 'rb') as f:
-            img = MIMEImage(f.read())
-            msg.attach(img)
-
-        # Questo è solo un esempio.
-        # Dal 2022, Gmail non permette di inviare email da client considerati non sicuri,
-        # useremo Flask e qualche libreria esterna per sistemare il problema.
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.starttls()
-        server.login("email@gmail.com", "password")
-        server.sendmail("email@gmail.com", email, msg.as_string())
-        server.quit()
+    def inserimentoPrenotazione(self, nome, cognome, email, telefono, num_persone, data, ora, note):
+        self.cursor.execute("""
+            INSERT INTO prenotazione (nome, cognome, email, telefono, num_persone, data, ora, note)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (nome, cognome, email, telefono, num_persone, data, ora, note))
+        self.conn.commit()
+        return True
 
 
-def inserimentoPrenotazione():
-    email = input("Inserisci la tua email: ")
-    num_telefono = input("Inserisci il tuo numero di telefono: ")
-    nome = input("Inserisci il tuo nome: ")
-    cognome = input("Inserisci il tuo cognome: ")
-    num_persone = input("Inserisci il numero di persone: ")
-    data = input("Inserisci la data (GG/MM/AAAA): ")
-    ora = input("Inserisci l'ora (HH:MM): ")
-    ora_completa = f"{ora}:00"
-    data_ora = f"{data} {ora_completa}"
-    data_ora_prenotazione = datetime.datetime.strptime(data_ora, '%d/%m/%Y %H:%M:%S')
-
-    prenotazione = Prenotazione(email, num_telefono, nome, cognome, num_persone, data_ora_prenotazione.date(),
-                                data_ora_prenotazione.time())
-    return prenotazione
-
-
-def confermaPrenotazione(prenotazione):
-    prenotazione.generaCodiceQR()
-    prenotazione.inviaEmail()
-    print("La tua prenotazione è stata registrata con successo!")
-    print("Abbiamo inviato il codice QR alla tua email.")
-
-
-def main():
-    print("Benvenuto in SpeedUp Restaurant!")
-    prenotazione = inserimentoPrenotazione()
-    confermaPrenotazione(prenotazione)
+@app.route('/prenotazione', methods=['GET', 'POST'])
+def prenotazione():
+    if request.method == 'POST':
+        prenotazione = Prenotazione.getInstance()
+        nome = request.form['nome']
+        cognome = request.form['cognome']
+        email = request.form['email']
+        telefono = request.form['telefono']
+        num_persone = request.form['num_persone']
+        data = request.form['data']
+        ora = request.form['ora']
+        note = request.form.get('note', '')
+        if prenotazione.inserimentoPrenotazione(nome, cognome, email, telefono, num_persone, data, ora, note):
+            img = generaCodiceQR({'nome': nome, 'cognome': cognome, 'prenotazione': prenotazione.cursor.lastrowid})
+            # Salva il codice QR nella directory static
+            img.save('static/{}_{}_{}_{}_{}_{}_{}_{}.png'.format(
+                nome.replace(' ', '_'), cognome.replace(' ', '_'), email.replace(' ', '_'),
+                telefono.replace(' ', '_'), num_persone, data.replace(' ', '_'),
+                ora.replace(':', ''), note.replace(' ', '_'), prenotazione.cursor.lastrowid
+            ))
+            # inviaCodiceQR(email, {'nome': nome, 'cognome': cognome, 'prenotazione':
+            # prenotazione.cursor.lastrowid}, img)
+            return confermaPrenotazione()
+    else:
+        return render_template('prenotazione.html')
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    app.run(debug=True)
