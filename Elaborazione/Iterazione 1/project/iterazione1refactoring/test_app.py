@@ -1,6 +1,5 @@
 import unittest
 import datetime
-import os
 from app import *
 
 # È consigliato usare Pycharm, ma eventualmente conviene

@@ -78,7 +78,7 @@ def main():
         print("\nBenvenuto in Speedup Restaurant!")
         print("Cosa vuoi fare?\n")
         print("1. Effettuare una nuova prenotazione")
-        print("q. Uscire")
+        print("q. Esci")
         scelta = input("Scelta: ")
         if scelta == "1":
             nome = input("Inserisci il tuo nome: ")
@@ -97,8 +97,6 @@ def main():
         if scelta == "q":
             print("Grazie per aver usato Speedup Restaurant!")
             break
-        else:
-            print("input non valido, scegliere una delle opzioni precedenti.")
 
 
 if __name__ == "__main__":
