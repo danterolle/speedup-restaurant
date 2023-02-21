@@ -1,6 +1,6 @@
 import unittest
 import datetime
-from iterazione2 import Prenotazione, getPrenotazione, modificaPrenotazione
+from app import Prenotazione, getPrenotazione, modificaPrenotazione
 
 
 class TestGetPrenotazione(unittest.TestCase):

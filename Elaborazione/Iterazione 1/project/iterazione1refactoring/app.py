@@ -56,7 +56,7 @@ class SUR:
         print(f"- Cellulare: {cliente.cellulare}")
         print(f"- ID Tavolo: {cliente.idTavolo}")
 
-    def generaCodiceQR(self, file_path):
+    def generaCodiceQR(self):
         if not self.prenotazioni:
             raise ValueError("Non ci sono prenotazioni da salvare.")
         cliente, prenotazione = self.prenotazioni[-1]

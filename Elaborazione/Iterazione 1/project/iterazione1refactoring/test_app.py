@@ -65,9 +65,9 @@ class TestSUR(unittest.TestCase):
     def test_generaCodiceQR(self):
         sur = SUR.getInstance()
         sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@email.com", "3331234567", "2022-03-15", "20:00", 4, 5)
-        file_path = "./qrcodes/prenotazione_1.png"
-        sur.generaCodiceQR(file_path)
-        self.assertTrue(os.path.exists(file_path))
+        dir_path = "./qrcodes/prenotazione_1.png"
+        sur.generaCodiceQR()
+        self.assertTrue(os.path.exists(dir_path))
 
 
 if __name__ == "__main__":
