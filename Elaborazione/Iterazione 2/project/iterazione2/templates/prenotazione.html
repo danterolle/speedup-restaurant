@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prenotazione Speedup Restaurant!</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../static/prenotazione.js"></script>
+</head>
+<body>
+    <h1>Prenotazione Speedup Restaurant!</h1>
+    <form id="prenotazione-form">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" id="nome" required><br>
+
+        <label for="cognome">Cognome:</label>
+        <input type="text" name="cognome" id="cognome" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required><br>
+
+        <label for="telefono">Telefono:</label>
+        <input type="text" name="telefono" id="telefono" required><br>
+
+        <label for="num_persone">Numero di persone:</label>
+        <input type="number" name="num_persone" id="num_persone" required><br>
+
+        <label for="data">Data:</label>
+        <input type="date" name="data" id="data" required><br>
+
+        <label for="ora">Ora:</label>
+        <input type="time" name="ora" id="ora" required><br>
+
+        <label for="note">Note:</label>
+        <textarea name="note" id="note"></textarea><br>
+
+        <input type="submit" value="Prenota">
+    </form>
+
+    <div id="risultato"></div>
+</body>
+</html>

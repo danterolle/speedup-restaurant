@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visualizza Prenotazione</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../static/visualizza_prenotazione.js"></script>
+</head>
+<body>
+    <h1>Dettagli Prenotazione n.{{ prenotazione[0] }}</h1>
+    <div>
+        <p>Email: {{ prenotazione[1] }}</p>
+        <p>Numero di telefono: {{ prenotazione[2] }}</p>
+        <p>Nome: {{ prenotazione[3] }}</p>
+        <p>Cognome: {{ prenotazione[4] }}</p>
+        <p>Numero di persone: {{ prenotazione[5] }}</p>
+        <p>Data: {{ prenotazione[6] }}</p>
+        <p>Orario: {{ prenotazione[7] }}</p>
+        <p>Note: {{ prenotazione[8] }}</p>
+    </div>
+</body>
+</html>
