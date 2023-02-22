@@ -1,6 +1,9 @@
 import unittest
 import datetime
 from contextlib import redirect_stdout
+from cliente import Cliente
+from prenotazione import Prenotazione
+import os
 
 from app import *
 import io

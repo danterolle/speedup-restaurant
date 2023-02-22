@@ -3,6 +3,10 @@ import datetime
 from contextlib import redirect_stdout
 
 from app import *
+from cliente import Cliente
+from prenotazione import Prenotazione
+import os
+
 import io
 
 # È consigliato usare Pycharm, ma eventualmente conviene
