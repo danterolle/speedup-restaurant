@@ -96,6 +96,12 @@ class SUR:
         img.save(file_path)
         print(f"Codice QR salvato in {file_path}")
 
+    def elencaPrenotazioni(self):
+        for cliente, prenotazione in self.prenotazioni:
+            print(f"Prenotazione n. {prenotazione.id}")
+            print(f"Data: {prenotazione.data}")
+            print(f"Cliente: {cliente.nome} {cliente.cognome}")
+
     def modificaPrenotazione(self, email, num_persone, data, ora):
         for cliente, prenotazione in self.prenotazioni:
             if cliente.email == email:
@@ -177,11 +183,12 @@ def main():
         print("\nBenvenuto in Speedup Restaurant!")
         print("Cosa vuoi fare?\n")
         print("1. Effettuare una nuova prenotazione")
-        print("2. Modificare una prenotazione esistente")
-        print("3. Trova una prenotazione")
-        print("4. Inserire una portata")
-        print("5. Elenca le portate disponibili")
-        print("6. Mostra tutte le portate ordinate")
+        print("2. Elenca le prenotazioni")
+        print("3. Modificare una prenotazione esistente")
+        print("4. Trova una prenotazione")
+        print("5. Inserire una portata")
+        print("6. Elenca le portate disponibili")
+        print("7. Mostra tutte le portate ordinate")
         print("q. Esci")
         scelta = input("Scelta: ")
         if scelta == "1":
@@ -200,6 +207,8 @@ def main():
             # questo.
             print("Email inviata!")
         elif scelta == "2":
+            sur.elencaPrenotazioni()
+        elif scelta == "3":
             email = input("Inserisci l'email con cui hai effettuato la prenotazione: ")
             num_persone = int(input("Inserisci il nuovo numero di persone: "))
             data = input("Inserisci la nuova data (YYYY-MM-DD): ")
@@ -208,17 +217,17 @@ def main():
             print("Prenotazione modificata con successo!")
             sur.generaCodiceQR()
             print("Email inviata!")
-        elif scelta == "3":
+        elif scelta == "4":
             email = input("Inserisci l'email con cui hai effettuato la prenotazione: ")
             sur.cercaPrenotazione(email)
-        elif scelta == "4":
+        elif scelta == "5":
             id_tavolo = int(input("Inserisci l'id del tavolo: "))
             nome_portata = input("Inserisci il nome della portata: ")
             sur.inserimentoPortata(id_tavolo, nome_portata)
             print("Portata inserita con successo!")
-        elif scelta == "5":
-            sur.elencaPortate()
         elif scelta == "6":
+            sur.elencaPortate()
+        elif scelta == "7":
             id_tavolo = int(input("Inserisci l'id del tavolo: "))
             sur.mostraOrdine(id_tavolo)
         elif scelta == "q":
