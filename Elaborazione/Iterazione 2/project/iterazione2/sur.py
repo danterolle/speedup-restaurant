@@ -1,5 +1,8 @@
 from cliente import Cliente
 from prenotazione import Prenotazione
+import os
+import qrcode
+
 
 class SUR:
     __instance = None
