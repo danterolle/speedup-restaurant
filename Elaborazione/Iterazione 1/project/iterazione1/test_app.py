@@ -1,6 +1,9 @@
 import unittest
 import datetime
+from contextlib import redirect_stdout
+
 from app import *
+import io
 
 # È consigliato usare Pycharm, ma eventualmente conviene
 # avviare le unit test singolarmente, con il comando
@@ -66,6 +69,15 @@ class TestSUR(unittest.TestCase):
         file_path = "qrcodes/prenotazione_1.png"
         sur.generaCodiceQR(file_path)
         self.assertTrue(os.path.exists(file_path))
+
+    def test_elencaPrenotazioni(self):
+        sur = SUR.getInstance()
+        sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "3331234567", 4, "2023-03-15", "19:30")
+        sur.inserimentoPrenotazione("Luigi", "Verdi", "luigi.verdi@gmail.com", "3337654321", 2, "2023-03-20", "20:00")
+        expected_output = "Prenotazione n. 1\nData: 2023-03-15\nCliente: Mario Rossi\nPrenotazione n. 2\nData: 2023-03-20\nCliente: Luigi Verdi\n"
+        with io.StringIO() as buf, redirect_stdout(buf):
+            sur.elencaPrenotazioni()
+            self.assertEqual(buf.getvalue(), expected_output)
 
 
 if __name__ == "__main__":

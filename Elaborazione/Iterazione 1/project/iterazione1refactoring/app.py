@@ -69,6 +69,12 @@ class SUR:
         img.save(file_path)
         print(f"Codice QR salvato in {file_path}")
 
+    def elencaPrenotazioni(self):
+        for cliente, prenotazione in self.prenotazioni:
+            print(f"Prenotazione n. {prenotazione.id}")
+            print(f"Data: {prenotazione.data}")
+            print(f"Cliente: {cliente.nome} {cliente.cognome}")
+
 
 def main():
     sur = SUR.getInstance()
@@ -76,6 +82,7 @@ def main():
         print("\nBenvenuto in Speedup Restaurant!")
         print("Cosa vuoi fare?\n")
         print("1. Effettuare una nuova prenotazione")
+        print("2. Elenca le prenotazioni")
         print("q. Esci")
         scelta = input("Scelta: ")
         if scelta == "1":
@@ -93,7 +100,9 @@ def main():
             # Dal 2022 Gmail, Outlook e altri servizi email non consentono l'invio di email da client insicuri come
             # questo.
             print("Email inviata!")
-        if scelta == "q":
+        elif scelta == "2":
+            sur.elencaPrenotazioni()
+        elif scelta == "q":
             print("Grazie per aver usato Speedup Restaurant!")
             break
 

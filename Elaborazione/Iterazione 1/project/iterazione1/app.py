@@ -58,18 +58,24 @@ class SUR:
         print(f"- Email: {cliente.email}")
         print(f"- Cellulare: {cliente.cellulare}")
 
-    def generaCodiceQR(self, file_path):
+    def generaCodiceQR(self):
         if not self.prenotazioni:
             raise ValueError("Non ci sono prenotazioni da salvare.")
         cliente, prenotazione = self.prenotazioni[-1]
         qr_data = f"Prenotazione:\nID: {prenotazione.id}\nData: {prenotazione.data}\nOra: {prenotazione.ora}\nNumero di persone: {prenotazione.num_persone}\nCliente:\nNome: {cliente.nome}\nCognome: {cliente.cognome}\nEmail: {cliente.email}\nCellulare: {cliente.cellulare}"
         img = qrcode.make(qr_data)
-        dir_path = "qrcodes"
+        dir_path = "./qrcodes"
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
         file_path = os.path.join(dir_path, f"prenotazione_{prenotazione.id}.png")
         img.save(file_path)
         print(f"Codice QR salvato in {file_path}")
+
+    def elencaPrenotazioni(self):
+        for cliente, prenotazione in self.prenotazioni:
+            print(f"Prenotazione n. {prenotazione.id}")
+            print(f"Data: {prenotazione.data}")
+            print(f"Cliente: {cliente.nome} {cliente.cognome}")
 
 
 def main():
@@ -78,6 +84,7 @@ def main():
         print("\nBenvenuto in Speedup Restaurant!")
         print("Cosa vuoi fare?\n")
         print("1. Effettuare una nuova prenotazione")
+        print("2. Elenca le prenotazioni")
         print("q. Esci")
         scelta = input("Scelta: ")
         if scelta == "1":
@@ -94,7 +101,9 @@ def main():
             # Dal 2022 Gmail, Outlook e altri servizi email non consentono l'invio di email da client insicuri come
             # questo.
             print("Email inviata!")
-        if scelta == "q":
+        elif scelta == "2":
+            sur.elencaPrenotazioni()
+        elif scelta == "q":
             print("Grazie per aver usato Speedup Restaurant!")
             break
 

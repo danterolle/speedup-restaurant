@@ -20,6 +20,30 @@ class Prenotazione:
         self.ora = ora
 
 
+class Portata:
+    portate = [
+        {'id': 1, 'nome': 'Pizza Margherita', 'prezzo': 6.0},
+        {'id': 2, 'nome': 'Bistecca alla fiorentina', 'prezzo': 20.0},
+        {'id': 3, 'nome': 'Lasagna', 'prezzo': 8.0},
+        {'id': 4, 'nome': 'Insalata mista', 'prezzo': 4.0},
+    ]
+
+    def __init__(self, id, nome, prezzo):
+        self.id = id
+        self.nome = nome
+        self.prezzo = prezzo
+
+    def __str__(self):
+        return f"{self.nome} ({self.prezzo} euro)"
+
+    @classmethod
+    def getPortataByName(cls, nome):
+        for portata in cls.portate:
+            if portata['nome'] == nome:
+                return cls(portata['id'], portata['nome'], portata['prezzo'])
+        return None
+
+
 class SUR:
     __instance = None
 
@@ -35,11 +59,14 @@ class SUR:
         else:
             SUR.__instance = self
         self.prenotazioni = []
+        self.tavoli = {}
 
     def inserimentoPrenotazione(self, nome, cognome, email, cellulare, num_persone, data, ora, idTavolo):
         cliente = Cliente(nome, cognome, email, cellulare, idTavolo)
         prenotazione = Prenotazione(len(self.prenotazioni) + 1, num_persone, data, ora)
         self.prenotazioni.append((cliente, prenotazione))
+        if idTavolo not in self.tavoli:
+            self.tavoli[idTavolo] = []
 
     def confermaInserimento(self):
         print("Prenotazione confermata!")
@@ -68,12 +95,6 @@ class SUR:
         file_path = os.path.join(dir_path, f"prenotazione_{prenotazione.id}.png")
         img.save(file_path)
         print(f"Codice QR salvato in {file_path}")
-
-    def elencaPrenotazioni(self):
-        for cliente, prenotazione in self.prenotazioni:
-            print(f"Prenotazione n. {prenotazione.id}")
-            print(f"Data: {prenotazione.data}")
-            print(f"Cliente: {cliente.nome} {cliente.cognome}")
 
     def modificaPrenotazione(self, email, num_persone, data, ora):
         for cliente, prenotazione in self.prenotazioni:
@@ -113,6 +134,42 @@ class SUR:
                 return
         print("Prenotazione non trovata.")
 
+    def elencaPortate(self):
+        print("\nElenco delle portate disponibili:")
+        for portata in Portata.portate:
+            p = Portata(portata['id'], portata['nome'], portata['prezzo'])
+            print(f"{p.nome} ({p.prezzo} euro)")
+
+    def inserimentoPortata(self, idTavolo, listaPortate):
+        for tavolo in self.tavoli:
+            if isinstance(tavolo, dict) and tavolo.get('id') == idTavolo:
+                if isinstance(tavolo.get('portate'), list):
+                    portata = Portata.getPortataByName(listaPortate)
+                    if portata:
+                        tavolo['portate'].append(portata.__dict__)
+                        return True
+                    else:
+                        return False
+                else:
+                    return False
+        return False
+
+    def mostraOrdine(self, idTavolo):
+        for tavolo in self.tavoli.values():
+            if tavolo['id'] == idTavolo:
+                print(f"Portate del tavolo {idTavolo}:")
+                for portata in tavolo['portate']:
+                    print(f"- {portata['nome']}")
+                return
+        print(f"Tavolo con id {idTavolo} non trovato.")
+
+    def mostraConto(self, idTavolo):
+        if idTavolo in self.tavoli:
+            conto = sum([p.prezzo for p in self.tavoli[idTavolo]])
+            print(f"Il conto del tavolo {idTavolo} è {conto} euro")
+        else:
+            print(f"Errore: il tavolo {idTavolo} non esiste")
+
 
 def main():
     sur = SUR.getInstance()
@@ -120,9 +177,11 @@ def main():
         print("\nBenvenuto in Speedup Restaurant!")
         print("Cosa vuoi fare?\n")
         print("1. Effettuare una nuova prenotazione")
-        print("2. Elenca le prenotazioni")
-        print("3. Modificare una prenotazione esistente")
-        print("4. Trova una prenotazione")
+        print("2. Modificare una prenotazione esistente")
+        print("3. Trova una prenotazione")
+        print("4. Inserire una portata")
+        print("5. Elenca le portate disponibili")
+        print("6. Mostra tutte le portate ordinate")
         print("q. Esci")
         scelta = input("Scelta: ")
         if scelta == "1":
@@ -141,8 +200,6 @@ def main():
             # questo.
             print("Email inviata!")
         elif scelta == "2":
-            sur.elencaPrenotazioni()
-        elif scelta == "3":
             email = input("Inserisci l'email con cui hai effettuato la prenotazione: ")
             num_persone = int(input("Inserisci il nuovo numero di persone: "))
             data = input("Inserisci la nuova data (YYYY-MM-DD): ")
@@ -151,9 +208,19 @@ def main():
             print("Prenotazione modificata con successo!")
             sur.generaCodiceQR()
             print("Email inviata!")
-        elif scelta == "4":
+        elif scelta == "3":
             email = input("Inserisci l'email con cui hai effettuato la prenotazione: ")
             sur.cercaPrenotazione(email)
+        elif scelta == "4":
+            id_tavolo = int(input("Inserisci l'id del tavolo: "))
+            nome_portata = input("Inserisci il nome della portata: ")
+            sur.inserimentoPortata(id_tavolo, nome_portata)
+            print("Portata inserita con successo!")
+        elif scelta == "5":
+            sur.elencaPortate()
+        elif scelta == "6":
+            id_tavolo = int(input("Inserisci l'id del tavolo: "))
+            sur.mostraOrdine(id_tavolo)
         elif scelta == "q":
             print("Grazie per aver usato Speedup Restaurant!")
             break
