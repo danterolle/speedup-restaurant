@@ -126,3 +126,26 @@ class SUR:
     def visualizzaTavoli(self):
         print("Contenuto di self.tavoli:")
         print(self.tavoli)
+
+    def mostraOrdine(self, idTavolo):
+        for tavolo in self.tavoli:
+            if isinstance(tavolo, dict) and tavolo.get('id') == idTavolo:
+                print(f"Ordine del tavolo {idTavolo}:")
+                if isinstance(tavolo.get('portate'), list):
+                    for portata_dict in tavolo['portate']:
+                        portata = Portata(**portata_dict)
+                        print(f"\t- {portata}")
+                    return True
+                else:
+                    print("Nessuna portata nel tavolo.")
+                    return False
+        print("Tavolo non trovato.")
+        return False
+
+    def mostraConto(self, idTavolo):
+        if idTavolo in self.tavoli:
+            conto = sum([p.prezzo for p in self.tavoli[idTavolo]])
+            print(f"Il conto del tavolo {idTavolo} è {conto} euro")
+        else:
+            print(f"Errore: il tavolo {idTavolo} non esiste")
+
