@@ -1,7 +1,7 @@
 import unittest
 from io import StringIO
 from unittest.mock import patch
-from app import Menu, Ordine, mostraMenu, inserimentoPortata
+from sur import SUR
 
 
 class TestMenu(unittest.TestCase):
