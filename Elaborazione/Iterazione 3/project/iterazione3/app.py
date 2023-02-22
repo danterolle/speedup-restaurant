@@ -14,7 +14,6 @@ def main():
         print("4. Trova una prenotazione")
         print("5. Elenca le portate disponibili")
         print("6. Inserire una portata")
-        print("7. Mostra tutte le portate ordinate")
         print("q. Esci")
         scelta = input("Scelta: ")
         if scelta == "1":
@@ -49,6 +48,7 @@ def main():
         elif scelta == "5":
             sur.elencaPortate()
         elif scelta == "6":
+            # teoricamente da qui parte la scelta della portata (scegliPortata)
             id_tavolo = int(input("Inserisci l'id del tavolo: "))
             portate_da_ordinare = []
             while True:
@@ -67,9 +67,6 @@ def main():
             else:
                 print("Nessuna portata da ordinare")
             # sur.visualizzaTavoli()
-        elif scelta == "7":
-            id_tavolo = int(input("Inserisci l'id del tavolo: "))
-            sur.mostraOrdine(id_tavolo)
         elif scelta == "q":
             print("Grazie per aver usato Speedup Restaurant!")
             break
