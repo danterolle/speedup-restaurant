@@ -15,6 +15,7 @@ def main():
         print("5. Elenca le portate disponibili")
         print("6. Inserire una portata")
         print("7. Cerca un ordine")
+        print("8. Modifica un ordine")
         print("q. Esci")
         scelta = input("Scelta: ")
         if scelta == "1":
@@ -72,6 +73,34 @@ def main():
         elif scelta == "7":
             id_tavolo = int(input("Inserisci l'id del tavolo: "))
             sur.cercaOrdine(id_tavolo)
+        elif scelta == "8":
+            id_tavolo = int(input("Inserisci l'id del tavolo: "))
+            while True:
+                print(f"Cosa vuoi fare con l'ordine del tavolo {id_tavolo}?")
+                print("1. Aggiungere una portata")
+                print("2. Rimuovere una portata")
+                print("3. Uscire")
+                scelta_modifica = input("Scelta: ")
+                if scelta_modifica == "1":
+                    nome_portata = input("Inserisci il nome della portata da aggiungere: ")
+                    for p in Portata.portate:
+                        if p['nome'] == nome_portata:
+                            portata_da_aggiungere = Portata(p['id'], p['nome'], p['prezzo'])
+                            sur.modificaOrdine(id_tavolo, [portata_da_aggiungere])
+                            print(f"Portata {nome_portata} aggiunta all'ordine del tavolo {id_tavolo}")
+                            break
+                    else:
+                        print(f"La portata {nome_portata} non esiste nel menu")
+                elif scelta_modifica == "2":
+                    sur.cercaOrdine(id_tavolo)
+                    id_portata = int(input("Inserisci l'id della portata da rimuovere: "))
+                    sur.modificaOrdine(id_tavolo, [id_portata])
+                    print(f"Portata con ID {id_portata} rimossa dall'ordine del tavolo {id_tavolo}")
+                elif scelta_modifica == "3":
+                    break
+                else:
+                    print("Scelta non valida, riprova")
+            print("Modifiche all'ordine effettuate.")
         elif scelta == "q":
             print("Grazie per aver usato Speedup Restaurant!")
             break

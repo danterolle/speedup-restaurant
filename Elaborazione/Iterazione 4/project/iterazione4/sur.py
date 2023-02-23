@@ -140,6 +140,23 @@ class SUR:
                 print(f"Cliente: {elemento.nome}")
         return ordine
 
+    # TODO: Fix ordine.remove
+    def modificaOrdine(self, idTavolo, listaPortate):
+        if idTavolo not in self.tavoli:
+            print(f"Non esiste alcun tavolo con ID {idTavolo}")
+            return
+        ordine = self.tavoli[idTavolo]
+        for portata in listaPortate:
+            if isinstance(portata, Portata):
+                if portata in ordine:
+                    ordine.remove(portata)
+                    print(f"Portata {portata.nome} rimossa dall'ordine del tavolo {idTavolo}")
+                else:
+                    ordine.append(portata)
+                    print(f"Portata {portata.nome} aggiunta all'ordine del tavolo {idTavolo}")
+            else:
+                print(f"La portata {portata} non esiste nel menu")
+        return
 
     def mostraConto(self, idTavolo):
         if idTavolo in self.tavoli:
