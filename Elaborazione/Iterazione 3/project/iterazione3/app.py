@@ -64,6 +64,7 @@ def main():
                         print(f"La portata {nome_portata} non esiste nel menu")
             if len(portate_da_ordinare) > 0:
                 sur.inserimentoPortata(id_tavolo, portate_da_ordinare)
+                print("Ordine confermato!")
             else:
                 print("Nessuna portata da ordinare")
             # sur.visualizzaTavoli()

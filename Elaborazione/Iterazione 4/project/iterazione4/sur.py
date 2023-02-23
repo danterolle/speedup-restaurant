@@ -127,20 +127,19 @@ class SUR:
         print("Contenuto di self.tavoli:")
         print(self.tavoli)
 
-    def mostraOrdine(self, idTavolo):
-        for tavolo in self.tavoli:
-            if isinstance(tavolo, dict) and tavolo.get('id') == idTavolo:
-                print(f"Ordine del tavolo {idTavolo}:")
-                if isinstance(tavolo.get('portate'), list):
-                    for portata_dict in tavolo['portate']:
-                        portata = Portata(**portata_dict)
-                        print(f"\t- {portata}")
-                    return True
-                else:
-                    print("Nessuna portata nel tavolo.")
-                    return False
-        print("Tavolo non trovato.")
-        return False
+    def cercaOrdine(self, idTavolo):
+        if idTavolo not in self.tavoli:
+            print(f"Non esiste alcun tavolo con ID {idTavolo}")
+            return []
+        ordine = self.tavoli[idTavolo]
+        print(f"Ordine del tavolo {idTavolo}:")
+        for elemento in ordine:
+            if isinstance(elemento, Portata):
+                print(f"- {elemento.nome}: €{elemento.prezzo:.2f}")
+            elif isinstance(elemento, Cliente):
+                print(f"Cliente: {elemento.nome}")
+        return ordine
+
 
     def mostraConto(self, idTavolo):
         if idTavolo in self.tavoli:

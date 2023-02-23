@@ -14,6 +14,7 @@ def main():
         print("4. Trova una prenotazione")
         print("5. Elenca le portate disponibili")
         print("6. Inserire una portata")
+        print("7. Cerca un ordine")
         print("q. Esci")
         scelta = input("Scelta: ")
         if scelta == "1":
@@ -64,9 +65,13 @@ def main():
                         print(f"La portata {nome_portata} non esiste nel menu")
             if len(portate_da_ordinare) > 0:
                 sur.inserimentoPortata(id_tavolo, portate_da_ordinare)
+                print("Ordine confermato!")
             else:
                 print("Nessuna portata da ordinare")
             # sur.visualizzaTavoli()
+        elif scelta == "7":
+            id_tavolo = int(input("Inserisci l'id del tavolo: "))
+            sur.cercaOrdine(id_tavolo)
         elif scelta == "q":
             print("Grazie per aver usato Speedup Restaurant!")
             break
