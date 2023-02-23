@@ -16,7 +16,7 @@ class SUR:
 
     def __init__(self):
         if SUR.__instance is not None:
-            raise Exception("Pattern Singleton!")
+            raise Exception("È già stata creata un'istanza della classe SUR")
         else:
             SUR.__instance = self
         self.prenotazioni = []
