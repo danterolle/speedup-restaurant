@@ -79,8 +79,10 @@ class TestSUR(unittest.TestCase):
 
     def test_elencaPrenotazioni(self):
         sur = SUR.getInstance()
-        sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "3331234567", 4, "2023-03-15", "19:30", 3)
-        sur.inserimentoPrenotazione("Luigi", "Verdi", "luigi.verdi@gmail.com", "3337654321", 2, "2023-03-20", "20:00", 3)
+        sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "3331234567", 4, "2023-03-15", "19:30",
+                                    3)
+        sur.inserimentoPrenotazione("Luigi", "Verdi", "luigi.verdi@gmail.com", "3337654321", 2, "2023-03-20", "20:00",
+                                    3)
         expected_output = "Prenotazione n. 1\nData: 2023-03-15\nCliente: Mario Rossi\nPrenotazione n. 2\nData: 2023-03-20\nCliente: Luigi Verdi\n"
         with io.StringIO() as buf, redirect_stdout(buf):
             sur.elencaPrenotazioni()
@@ -123,7 +125,6 @@ class TestSUR(unittest.TestCase):
             self.assertEqual(prenotazione_effettiva.num_persone, 4)
 
     def test_inserimentoPortata(self):
-        # Preparazione dati
         sur = SUR.getInstance()
         sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4, "2023-02-22", "19:00",
                                     1)
@@ -143,6 +144,33 @@ class TestSUR(unittest.TestCase):
         self.assertEqual(tavolo1[2].id, 2, "L'ID della portata non corrisponde a quello atteso")
         self.assertEqual(tavolo1[4].nome, "Tiramisù", "Il nome della portata non corrisponde a quello atteso")
         self.assertEqual(tavolo1[4].prezzo, 4.0, "Il prezzo della portata non corrisponde a quello atteso")
+
+    def test_modificaOrdine(self):
+        sur = SUR.getInstance()
+        sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4, "2023-02-22", "19:00",
+                                    1)
+        sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4, "2023-02-22", "19:00",
+                                    2)
+        sur.inserimentoPortata(1, [Portata(1, "Pizza Margherita", 5.0), Portata(2, "Spaghetti alla Carbonara", 8.0)])
+        sur.inserimentoPortata(2, [Portata(2, "Spaghetti alla Carbonara", 8.0), Portata(3, "Tiramisù", 4.0)])
+        sur.inserimentoPortata(1, [Portata(1, "Pizza Margherita", 5.0), Portata(3, "Tiramisù", 4.0)])
+
+        sur.modificaOrdine(1, [Portata(1, "Pizza Margherita", 5.0)], True)
+        tavolo1 = sur.tavoli[1]
+        self.assertEqual(len(tavolo1), 4, "Rimozione di portate non funziona correttamente")
+        self.assertEqual(tavolo1[1].id, 2, "L'ID della portata non corrisponde a quello atteso")
+        self.assertEqual(tavolo1[1].nome, "Spaghetti alla Carbonara",
+                         "Il nome della portata non corrisponde a quello atteso")
+        self.assertEqual(tavolo1[1].prezzo, 8.0, "Il prezzo della portata non corrisponde a quello atteso")
+        self.assertIsInstance(tavolo1[1], Portata, "La lista del tavolo deve contenere oggetti di tipo Portata")
+        self.assertEqual(tavolo1[1].nome, "Spaghetti alla Carbonara",
+                         "Il nome della portata non corrisponde a quello atteso")
+        self.assertEqual(tavolo1[1].prezzo, 8.0, "Il prezzo della portata non corrisponde a quello atteso")
+        self.assertIsInstance(tavolo1[2], Portata, "La lista del tavolo deve contenere oggetti di tipo Portata")
+        self.assertEqual(tavolo1[3].id, 3, "L'ID della portata non corrisponde a quello atteso")
+        self.assertEqual(tavolo1[3].nome, "Tiramisù", "Il nome della portata non corrisponde a quello atteso")
+        self.assertEqual(tavolo1[3].prezzo, 4.0, "Il prezzo della portata non corrisponde a quello atteso")
+        self.assertIsInstance(tavolo1[3], Portata, "La lista del tavolo deve contenere oggetti di tipo Portata")
 
 
 if __name__ == "__main__":
