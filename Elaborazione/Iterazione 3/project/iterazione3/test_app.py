@@ -123,7 +123,6 @@ class TestSUR(unittest.TestCase):
             self.assertEqual(prenotazione_effettiva.num_persone, 4)
 
     def test_inserimentoPortata(self):
-        # Preparazione dati
         sur = SUR.getInstance()
         sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4, "2023-02-22", "19:00",
                                     1)
