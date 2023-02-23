@@ -4,6 +4,7 @@ from portata import Portata
 
 
 def main():
+    global portata_da_aggiungere, portata_da_rimuovere
     sur = SUR.getInstance()
     while True:
         print("\nBenvenuto in Speedup Restaurant!")
@@ -83,19 +84,28 @@ def main():
                 scelta_modifica = input("Scelta: ")
                 if scelta_modifica == "1":
                     nome_portata = input("Inserisci il nome della portata da aggiungere: ")
+                    portata_trovata = False
                     for p in Portata.portate:
                         if p['nome'] == nome_portata:
                             portata_da_aggiungere = Portata(p['id'], p['nome'], p['prezzo'])
-                            sur.modificaOrdine(id_tavolo, [portata_da_aggiungere])
-                            print(f"Portata {nome_portata} aggiunta all'ordine del tavolo {id_tavolo}")
+                            portata_trovata = True
                             break
+                    if portata_trovata:
+                        sur.modificaOrdine(id_tavolo, [portata_da_aggiungere], rimuovi=False)
                     else:
                         print(f"La portata {nome_portata} non esiste nel menu")
                 elif scelta_modifica == "2":
-                    sur.cercaOrdine(id_tavolo)
-                    id_portata = int(input("Inserisci l'id della portata da rimuovere: "))
-                    sur.modificaOrdine(id_tavolo, [id_portata])
-                    print(f"Portata con ID {id_portata} rimossa dall'ordine del tavolo {id_tavolo}")
+                    nome_portata = input("Inserisci il nome della portata da rimuovere: ")
+                    portata_trovata = False
+                    for p in Portata.portate:
+                        if p['nome'] == nome_portata:
+                            portata_da_rimuovere = Portata(p['id'], p['nome'], p['prezzo'])
+                            portata_trovata = True
+                            break
+                    if portata_trovata:
+                        sur.modificaOrdine(id_tavolo, [portata_da_rimuovere], rimuovi=True)
+                    else:
+                        print(f"La portata {nome_portata} non esiste nel menu")
                 elif scelta_modifica == "3":
                     break
                 else:
