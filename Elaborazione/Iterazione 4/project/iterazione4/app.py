@@ -110,7 +110,7 @@ def main():
                     break
                 else:
                     print("Scelta non valida, riprova")
-            print("Modifiche all'ordine effettuate.")
+            sur.confermaModificaOrdine()
         elif scelta == "q":
             print("Grazie per aver usato Speedup Restaurant!")
             break
