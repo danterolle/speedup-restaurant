@@ -17,6 +17,8 @@ def main():
         print("6. Inserire una portata")
         print("7. Cerca un ordine")
         print("8. Modifica un ordine")
+        print("9. Visualizza il costo totale di un ordine")
+        print("10. Effettua il pagamento per un tavolo")
         print("q. Esci")
         scelta = input("Scelta: ")
         if scelta == "1":
@@ -111,6 +113,18 @@ def main():
                 else:
                     print("Scelta non valida, riprova")
             sur.confermaModificaOrdine()
+        elif scelta == "9":
+            id_tavolo = int(input("Inserisci l'id del tavolo: "))
+            costo_totale = sur.visualizzaCostoTotale(id_tavolo)
+            if costo_totale is None:
+                return
+            print(f"Il costo totale per il tavolo {id_tavolo} è di {costo_totale:.2f} euro")
+        elif scelta == "10":
+            id_tavolo = int(input("Inserisci l'id del tavolo: "))
+            if sur.effettuaPagamento(id_tavolo):
+                print("Il pagamento è stato effettuato con successo")
+            else:
+                print("Errore: il pagamento non è stato effettuato")
         elif scelta == "q":
             print("Grazie per aver usato Speedup Restaurant!")
             break

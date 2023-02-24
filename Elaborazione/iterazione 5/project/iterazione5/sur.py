@@ -21,6 +21,7 @@ class SUR:
             SUR.__instance = self
         self.prenotazioni = []
         self.tavoli = {}
+        self.ordini_pagati = []
 
     def inserimentoPrenotazione(self, nome, cognome, email, cellulare, num_persone, data, ora, idTavolo):
         cliente = Cliente(nome, cognome, email, cellulare, idTavolo)
@@ -168,10 +169,31 @@ class SUR:
     def confermaModificaOrdine(self):
         print("Modifiche all'ordine effettuate.")
 
-    def mostraConto(self, idTavolo):
-        if idTavolo in self.tavoli:
-            conto = sum([p.prezzo for p in self.tavoli[idTavolo]])
-            print(f"Il conto del tavolo {idTavolo} è {conto} euro")
+    def visualizzaCostoTotale(self, idTavolo):
+        if idTavolo not in self.tavoli:
+            print(f"Non esiste alcun tavolo con ID {idTavolo}")
+            return None
+        ordine = self.tavoli[idTavolo]
+        costo_totale = sum([portata.prezzo for portata in ordine if isinstance(portata, Portata)])
+        return costo_totale
+
+    def effettuaPagamento(self, idTavolo):
+        if idTavolo not in self.tavoli:
+            print(f"Non esiste alcun tavolo con ID {idTavolo}")
+            return False
         else:
-            print(f"Errore: il tavolo {idTavolo} non esiste")
+            ordine = self.tavoli[idTavolo]
+            costo_totale = sum([portata.prezzo for portata in ordine if isinstance(portata, Portata)])
+            if costo_totale == 0:
+                print(f"Non esiste alcun ordine per il tavolo {idTavolo}")
+                return False
+            else:
+                self.ordini_pagati.append(idTavolo)
+                self.confermaPagamento(idTavolo)
+                return True
+
+    def confermaPagamento(self, idTavolo):
+        print(f"Pagamento effettuato per il tavolo {idTavolo}")
+
+
 
