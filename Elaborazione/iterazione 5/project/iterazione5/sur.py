@@ -168,3 +168,10 @@ class SUR:
     def confermaModificaOrdine(self):
         print("Modifiche all'ordine effettuate.")
 
+    def mostraConto(self, idTavolo):
+        if idTavolo in self.tavoli:
+            conto = sum([p.prezzo for p in self.tavoli[idTavolo]])
+            print(f"Il conto del tavolo {idTavolo} è {conto} euro")
+        else:
+            print(f"Errore: il tavolo {idTavolo} non esiste")
+
