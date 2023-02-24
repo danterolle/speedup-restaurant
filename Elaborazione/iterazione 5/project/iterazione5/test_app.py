@@ -172,6 +172,40 @@ class TestSUR(unittest.TestCase):
         self.assertEqual(tavolo1[3].prezzo, 4.0, "Il prezzo della portata non corrisponde a quello atteso")
         self.assertIsInstance(tavolo1[3], Portata, "La lista del tavolo deve contenere oggetti di tipo Portata")
 
+    def test_visualizzaCostoTotale(self):
+        sur = SUR.getInstance()
+
+        sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4, "2023-02-22", "19:00",
+                                    1)
+        sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4, "2023-02-22", "19:00",
+                                    2)
+
+        sur.inserimentoPortata(1, [Portata(1, "Pizza Margherita", 5.0), Portata(2, "Spaghetti alla Carbonara", 8.0)])
+        sur.inserimentoPortata(2, [Portata(2, "Spaghetti alla Carbonara", 8.0), Portata(3, "Tiramisù", 4.0)])
+        sur.inserimentoPortata(1, [Portata(1, "Pizza Margherita", 5.0), Portata(3, "Tiramisù", 4.0)])
+
+        sur.modificaOrdine(1, [Portata(1, "Pizza Margherita", 5.0)], True)
+
+        costo_totale = sur.visualizzaCostoTotale(1)
+        costo_totale_2 = sur.visualizzaCostoTotale(2)
+        self.assertEqual(costo_totale, 17.0)
+        self.assertEqual(costo_totale_2, 12.0)
+
+    def test_effettuaPagamento(self):
+        sur = SUR.getInstance()
+
+        sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4,
+                                                      "2023-02-22", "19:00", 1)
+        sur.inserimentoPortata(1,
+                               [Portata(1, "Pizza Margherita", 5.0), Portata(2, "Spaghetti alla Carbonara", 8.0)])
+
+        sur.modificaOrdine(1, [Portata(1, "Pizza Margherita", 5.0)], True)
+
+        costo_totale = sur.visualizzaCostoTotale(1)
+        pagamento = sur.effettuaPagamento(1)
+        self.assertEqual(costo_totale, 8.0)
+        self.assertEqual(pagamento, True)
+
 
 if __name__ == "__main__":
     unittest.main()
