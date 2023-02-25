@@ -190,7 +190,7 @@ class SUR:
             else:
                 self.ordini_pagati.append(idTavolo)
                 self.confermaPagamento(idTavolo)
-                self.ordini_pagati.remove(idTavolo)
+                del self.tavoli[idTavolo]
                 return True
 
     def confermaPagamento(self, idTavolo):
@@ -205,6 +205,4 @@ class SUR:
                 print("Prenotazione annullata con successo.")
                 return
         print("Prenotazione non trovata.")
-
-
 

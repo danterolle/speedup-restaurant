@@ -19,6 +19,8 @@ def main():
         print("8. Modifica un ordine")
         print("9. Visualizza il costo totale di un ordine")
         print("10. Effettua il pagamento per un tavolo")
+        print("11. Annulla una prenotazione")
+        print("12. Visualizza gli ordini pagati")
         print("q. Esci")
         scelta = input("Scelta: ")
         if scelta == "1":
@@ -125,6 +127,11 @@ def main():
                 print("Il pagamento è stato effettuato con successo")
             else:
                 print("Errore: il pagamento non è stato effettuato")
+        elif scelta == "11":
+            email = input("Inserisci l'email con cui hai effettuato la prenotazione: ")
+            sur.annullaPrenotazione(email)
+        elif scelta == "12":
+            sur.elencaPagamenti()
         elif scelta == "q":
             print("Grazie per aver usato Speedup Restaurant!")
             break
