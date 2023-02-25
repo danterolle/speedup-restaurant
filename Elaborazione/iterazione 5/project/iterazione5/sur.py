@@ -22,6 +22,7 @@ class SUR:
         self.prenotazioni = []
         self.tavoli = {}
         self.ordini_pagati = []
+        self.ordini_da_pagare = []
 
     def inserimentoPrenotazione(self, nome, cognome, email, cellulare, num_persone, data, ora, idTavolo):
         cliente = Cliente(nome, cognome, email, cellulare, idTavolo)
@@ -206,3 +207,21 @@ class SUR:
                 return
         print("Prenotazione non trovata.")
 
+    def visualizzaPagamenti(self):
+        for cliente, prenotazione in self.prenotazioni:
+            if prenotazione.id in self.ordini_pagati:
+                self.ordini_pagati.append((cliente, prenotazione))
+            else:
+                self.ordini_da_pagare.append((cliente, prenotazione))
+
+        print("Prenotazioni pagate:")
+        for cliente, prenotazione in self.ordini_pagati:
+            print(f"Prenotazione n. {prenotazione.id}")
+            print(f"Data: {prenotazione.data}")
+            print(f"Cliente: {cliente.nome} {cliente.cognome} {cliente.idTavolo}")
+
+        print("\nPrenotazioni da pagare:")
+        for cliente, prenotazione in self.ordini_da_pagare:
+            print(f"Prenotazione n. {prenotazione.id}")
+            print(f"Data: {prenotazione.data}")
+            print(f"Cliente: {cliente.nome} {cliente.cognome} {cliente.idTavolo}")

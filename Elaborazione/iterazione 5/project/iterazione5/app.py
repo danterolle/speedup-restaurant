@@ -131,7 +131,7 @@ def main():
             email = input("Inserisci l'email con cui hai effettuato la prenotazione: ")
             sur.annullaPrenotazione(email)
         elif scelta == "12":
-            sur.elencaPagamenti()
+            sur.visualizzaPagamenti()
         elif scelta == "q":
             print("Grazie per aver usato Speedup Restaurant!")
             break
