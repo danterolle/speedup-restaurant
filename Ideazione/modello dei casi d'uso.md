@@ -68,18 +68,14 @@ Per i restanti casi d’uso si fornisce una descrizione in formato breve.
 | Scenario principale di successo               | 1. Il Cliente accede all'applicazione web<br> 2. Il Cliente sceglie l'opzione "paga ordine"<br> 3. Il Cliente visualizza il costo totale dell'Ordine<br> 4. Il Cliente effettua il pagamento<br> 5. Il sistema registra le informazioni dell'avvenuto pagamento<br> 6. Il sistema invia per email una ricevuta del pagamento<br> 8. Il sistema indica di aver finito |
 | Frequenza di ripetizione                      | Circa 100 pagamenti al giorno                                                                                                                                                                                                                                                                                                                                        |
 
-## UC4: Elaborazione degli ordini
-
-L'Ordine comunicato viene elaborato dal Cuoco e successivamente il Cameriere lo consegna al Cliente.
-
-## UC5: Annullamento della prenotazione
+## UC4: Annullamento della prenotazione
 
 Il Cliente può decidere di annullare una prenotazione relativa al proprio tavolo.
 
-## UC6: Visualizzazione delle prenotazioni
+## UC5: Visualizzazione delle prenotazioni
 
 L'Addetto ha la possibilità di visualizzare le prenotazioni relative ai tavoli e i dati inseriti dal Cliente.
 
-## UC7: Visualizzazione dei pagamenti
+## UC6: Visualizzazione dei pagamenti
 
 L'Amministratore può visualizzare gli ordini da pagare e/o pagati.

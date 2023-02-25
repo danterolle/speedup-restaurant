@@ -190,10 +190,21 @@ class SUR:
             else:
                 self.ordini_pagati.append(idTavolo)
                 self.confermaPagamento(idTavolo)
+                self.ordini_pagati.remove(idTavolo)
                 return True
 
     def confermaPagamento(self, idTavolo):
         print(f"Pagamento effettuato per il tavolo {idTavolo}")
+
+    def annullaPrenotazione(self, email):
+        for i, (cliente, prenotazione) in enumerate(self.prenotazioni):
+            if cliente.email == email:
+                del self.prenotazioni[i]
+                if cliente.idTavolo in self.tavoli:
+                    self.tavoli[cliente.idTavolo].remove(cliente)
+                print("Prenotazione annullata con successo.")
+                return
+        print("Prenotazione non trovata.")
 
 
 
