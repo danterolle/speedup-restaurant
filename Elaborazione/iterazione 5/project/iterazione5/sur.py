@@ -176,8 +176,17 @@ class SUR:
             return None
         ordine = self.tavoli[idTavolo]
         costo_totale = sum([portata.prezzo for portata in ordine if isinstance(portata, Portata)])
+
         if len(ordine) > 3:
-            costo_totale *= 0.9  # applica lo sconto del 10%
+            costo_totale *= 0.9  # Applica lo sconto del 10%
+
+        if costo_totale > 20:
+            # Cerca la portata con il prezzo inferiore e rimuovila dall'ordine
+            prezzo_minimo = min([portata.prezzo for portata in ordine if isinstance(portata, Portata)])
+            for i, portata in enumerate(ordine):
+                if isinstance(portata, Portata) and portata.prezzo == prezzo_minimo:
+                    del ordine[i]
+                    break
         return costo_totale
 
     def effettuaPagamento(self, idTavolo):
