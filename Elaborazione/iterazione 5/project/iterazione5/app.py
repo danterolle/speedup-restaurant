@@ -31,7 +31,7 @@ def main():
             num_persone = int(input("Inserisci il numero di persone: "))
             data = input("Inserisci la data (YYYY-MM-DD): ")
             ora = input("Inserisci l'ora (HH:MM): ")
-            idTavolo = random.randint(1, 20)
+            idTavolo = random.randint(1, 9999)
             sur.inserimentoPrenotazione(nome, cognome, email, cellulare, num_persone, data, ora, idTavolo)
             sur.confermaInserimento()
             sur.generaCodiceQR()

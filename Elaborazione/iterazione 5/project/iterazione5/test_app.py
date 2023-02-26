@@ -191,6 +191,40 @@ class TestSUR(unittest.TestCase):
         self.assertEqual(costo_totale, 17.0)
         self.assertEqual(costo_totale_2, 12.0)
 
+    # Unit test che include le regole di dominio R1 e R2
+    def test_visualizzaCostoTotaleUpdated(self):
+        sur = SUR.getInstance()
+
+        # Inserimento prenotazioni e portate
+        sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4, "2023-02-22", "19:00",
+                                    1)
+        sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4, "2023-02-22", "19:00",
+                                    2)
+        sur.inserimentoPortata(1, [Portata(1, "Pizza Margherita", 5.0), Portata(2, "Spaghetti alla Carbonara", 8.0)])
+        sur.inserimentoPortata(2, [Portata(2, "Spaghetti alla Carbonara", 8.0), Portata(3, "Tiramisù", 4.0)])
+        sur.inserimentoPortata(1, [Portata(1, "Pizza Margherita", 5.0), Portata(3, "Tiramisù", 4.0)])
+
+        # Modifica ordine
+        sur.modificaOrdine(1, [Portata(1, "Pizza Margherita", 5.0)], True)
+
+        # Calcola costo totale e controlla il risultato
+        costo_totale = sur.visualizzaCostoTotale(1)
+        costo_totale_2 = sur.visualizzaCostoTotale(2)
+        self.assertAlmostEqual(costo_totale, 15.3, delta=0.01)
+        self.assertEqual(costo_totale_2, 12.0)
+
+        # Aggiungi altre portate e controlla lo sconto
+        sur.modificaOrdine(1, [Portata(2, "Spaghetti alla Carbonara", 8.0), Portata(3, "Tiramisù", 4.0)], True)
+        costo_totale_3 = sur.visualizzaCostoTotale(1)
+        self.assertAlmostEqual(costo_totale_3, 13.5 * 0.9)
+
+        # Aggiungi una portata con prezzo inferiore e controlla che non venga pagata
+        sur.modificaOrdine(1,
+                           [Portata(1, "Pizza Margherita", 5.0), Portata(3, "Tiramisù", 4.0), Portata(4, "Acqua", 1.0)],
+                           True)
+        costo_totale_4 = sur.visualizzaCostoTotale(1)
+        self.assertAlmostEqual(costo_totale_4, 13.5 * 0.9, delta=0.01)
+
     def test_effettuaPagamento(self):
         sur = SUR.getInstance()
 
