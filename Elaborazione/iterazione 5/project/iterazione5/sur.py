@@ -176,6 +176,8 @@ class SUR:
             return None
         ordine = self.tavoli[idTavolo]
         costo_totale = sum([portata.prezzo for portata in ordine if isinstance(portata, Portata)])
+        if len(ordine) > 3:
+            costo_totale *= 0.9  # applica lo sconto del 10%
         return costo_totale
 
     def effettuaPagamento(self, idTavolo):
