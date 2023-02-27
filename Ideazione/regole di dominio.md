@@ -1,6 +1,6 @@
 # Regole di dominio
 
-| ID  | Regola                                                                                                               | Modificabilità | Sorgente                        | 
-|-----|----------------------------------------------------------------------------------------------------------------------|----------------|---------------------------------|
-| R1  | Se la prenotazione è effettuata nei giorni festivi, viene applicato un sovrapprezzo del 10% su tutti gli ordini      | Bassa          | Politica interna del ristorante | 
-| R2  | Se la prenotazione avviene nei giorni feriali, viene applicato uno sconto del 5% su ogni ordine che superi i 10 euro | Bassa          | Politica interna del ristorante |
+| ID  | Regola                                                                                               | Modificabilità | Sorgente                        | 
+|-----|------------------------------------------------------------------------------------------------------|----------------|---------------------------------|
+| R1  | Se l'ordine è composto da più di 3 portate, viene applicato uno sconto del 10% euro sul costo totale | Bassa          | Politica interna del ristorante | 
+| R2  | Se il costo totale è maggiore di 20 euro, la portata col prezzo inferiore non viene pagata           | Bassa          | Politica interna del ristorante |

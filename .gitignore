@@ -2,3 +2,10 @@
 .venv
 venv/
 Elaborazione/Iterazione 1/project/iterazione1/*.png
+Elaborazione/Iterazione 1/project/iterazione1refactoring/*.png
+Elaborazione/Iterazione 2/project/iterazione2/*.png
+Elaborazione/Iterazione 3/project/iterazione3/*.png
+Elaborazione/Iterazione 4/project/iterazione4/*.png
+Elaborazione/Iterazione 5/project/iterazione5/*.png
+.DS_Store
+__pycache__
