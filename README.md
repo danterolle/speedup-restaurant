@@ -27,13 +27,8 @@ Nell'iterazione 5 sono state aggiunte tutte le funzionalità specificate nei cas
 ## Setup
 
 Ogni parte di questa applicazione è stata interamente scritta in Python 3.10 (con l'ausilio di Pycharm per la gestione e il test dell'applicazione) su piattaforme MacOS e Ubuntu,
-quindi per prima cosa occorrerà installare Python 3.10 (o versione 3 precedente/successiva). Essendo scritta in puro Python, non necessita di librerie esterne ad eccezione di `qrcode` in quanto necessaria per la creazione di un codice QR.
-
-In tal caso, si può installare da Pycharm stesso oppure da terminale usando il package manager `pip` nella versione 3:
-
-````
-$ pip3 install qrcode
-````
+quindi per prima cosa occorrerà installare Python 3.10 (o versione 3 precedente/successiva come Python 3.11). 
+Essendo scritta in puro Python, non necessita di librerie esterne ad eccezione di `qrcode` in quanto necessaria per la creazione di un codice QR.
 
 Seppur non necessario, è consigliato l'uso di un ambiente virtuale come venv per ogni iterazione, ad esempio:
 
@@ -41,6 +36,12 @@ Seppur non necessario, è consigliato l'uso di un ambiente virtuale come venv pe
 $ cd speedup-restaurant/Elaborazione/Iterazione 3/project/iterazione3
 $ python3.10 -m venv venv
 $ source venv/bin/activate
+````
+
+Per installare il modulo `qrcode`, si può procedere da Pycharm stesso oppure da terminale usando il package manager `pip` nella versione 3:
+
+````
+$ pip3 install qrcode
 ````
 
 Nei successivi sottocapitoli verrà mostrato come avviare e testare l'applicazione per ogni iterazione. 
@@ -106,4 +107,4 @@ Altro esempio:
 $ python3.10 -m unittest test_app.TestSUR.test_inserimentoPrenotazione
 ````
 
-**Nota importante**: le unit tests sono state provate singolarmente e non tutte insieme, ogni metodo è stati provato indipendentemente dagli altri per assicurare un corretto e stabile funzionamento.
+**Nota importante**: le unit tests sono state provate singolarmente e non tutte insieme, ogni metodo è stato provato indipendentemente dagli altri per assicurare un corretto e stabile funzionamento.
