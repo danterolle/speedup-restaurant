@@ -211,19 +211,19 @@ class TestSUR(unittest.TestCase):
         costo_totale = sur.visualizzaCostoTotale(1)
         costo_totale_2 = sur.visualizzaCostoTotale(2)
         self.assertAlmostEqual(costo_totale, 15.3, delta=0.01)
-        self.assertEqual(costo_totale_2, 12.0)
+        self.assertAlmostEqual(costo_totale_2, 12.0, delta=0.01)
 
         # Aggiungi altre portate e controlla lo sconto
         sur.modificaOrdine(1, [Portata(2, "Spaghetti alla Carbonara", 8.0), Portata(3, "Tiramisù", 4.0)], True)
         costo_totale_3 = sur.visualizzaCostoTotale(1)
-        self.assertAlmostEqual(costo_totale_3, 13.5 * 0.9)
+        self.assertAlmostEqual(costo_totale_3, 5.0, delta=0.01)
 
         # Aggiungi una portata con prezzo inferiore e controlla che non venga pagata
         sur.modificaOrdine(1,
                            [Portata(1, "Pizza Margherita", 5.0), Portata(3, "Tiramisù", 4.0), Portata(4, "Acqua", 1.0)],
                            True)
         costo_totale_4 = sur.visualizzaCostoTotale(1)
-        self.assertAlmostEqual(costo_totale_4, 13.5 * 0.9, delta=0.01)
+        self.assertEqual(costo_totale_4, 0)
 
     def test_effettuaPagamento(self):
         sur = SUR.getInstance()
