@@ -7,6 +7,20 @@ Progetto per l'esame di Ingegneria del Software.
 Per la fase di elaborazione sono presenti diverse iterazioni, ognuna delle quali contiene una cartella dedicata 
 all'implementazione di ogni componente dell'applicazione. Dentro ogni cartella si può trovare un file `.asta` per i diagrammi UML e tutti gli screenshot riguardanti la progettazione.
 
+Riassumendo, dentro ogni cartella **iterazione** si troverà:
+
+````
+├── Iterazione 3
+│  ├── Iterazione3.asta
+│  ├── SD inserimentoPortata.png
+│  ├── SD scegliPortata.png
+│  ├── SSD UC2.png
+│  ├── diagramma delle classi.png
+│  ├── iterazione 3.md
+│  ├── modello di dominio.png
+│  └── project
+````
+
 Nell'iterazione 5 sono state aggiunte tutte le funzionalità specificate nei casi d'uso rimanenti ma non analizzati nel dettaglio come i primi tre.
 È possibile vedere le due regole di dominio R1 ed R2 applicate nei file riguardanti l'iterazione 5, in particolare nel metodo `visualizzaCostoTotale` contenuto dentro `sur.py`, dove R1 ed R2 sono state aggiunte e commentate. 
 
@@ -15,7 +29,7 @@ Nell'iterazione 5 sono state aggiunte tutte le funzionalità specificate nei cas
 Ogni parte di questa applicazione è stata interamente scritta in Python 3.10 (con l'ausilio di Pycharm per la gestione e il test dell'applicazione) su piattaforme MacOS e Ubuntu,
 quindi per prima cosa occorrerà installare Python 3.10 (o versione 3 precedente/successiva). Essendo scritta in puro Python, non necessita di librerie esterne ad eccezione di `qrcode` in quanto necessaria per la creazione di un codice QR.
 
-In tal caso, si può installa da Pycharm stesso, oppure da terminale usando il package manager `pip`:
+In tal caso, si può installare da Pycharm stesso, oppure da terminale usando il package manager `pip` nella versione 3:
 
 ````
 $ pip3 install qrcode
@@ -66,6 +80,7 @@ $ python3.10 app.py
 Per quanto riguarda le unit tests si è usato il framework unittest e si possono provando dal terminale (oppure da Pycharm stesso) seguendo questi step:
 
 ````
+$ cd speedup-restaurant/Elaborazione/Iterazione 3/project/iterazione3
 $ python3.10 -m unittest test_app.TestCliente.test_cliente
 ````
 
@@ -91,4 +106,4 @@ Altro esempio:
 $ python3.10 -m unittest test_app.TestSUR.test_inserimentoPrenotazione
 ````
 
-**Nota importante**: le unit test sono state provate singolarmente e non tutte insieme, ogni funzione è stata provata indipendentemente dalle altre per assicurare un corretto e stabile funzionamento.
+**Nota importante**: le unit tests sono state provate singolarmente e non tutte insieme, ogni metodo è stati provato indipendentemente dagli altri per assicurare un corretto e stabile funzionamento.
