@@ -2,6 +2,14 @@
 
 Progetto per l'esame di Ingegneria del Software.
 
+## Table of Contents
+
+1. [Get Started](#get-started)
+2. [Setup](#setup)
+3. [File Structure](#file-structure)
+4. [How to start it](#how-to-start-it)
+5. [Unit Testing](#unit-testing)
+
 ## Get Started
 
 Per la fase di elaborazione sono presenti diverse iterazioni, ognuna delle quali contiene una cartella dedicata 
@@ -46,7 +54,7 @@ $ pip3 install qrcode
 
 Nei successivi sottocapitoli verrà mostrato come avviare e testare l'applicazione per ogni iterazione. 
 
-### File structure
+### File Structure
 
 Esempio della struttura del progetto di ogni singola iterazione:
 
@@ -76,7 +84,7 @@ E usare Python per avviarla
 $ python3.10 app.py
 ````
 
-## Unit testing
+## Unit Testing
 
 Per quanto riguarda le unit tests si è usato il framework unittest e si possono provare dal terminale (oppure da Pycharm stesso) seguendo questi step:
 
