@@ -29,7 +29,7 @@ Nell'iterazione 5 sono state aggiunte tutte le funzionalità specificate nei cas
 Ogni parte di questa applicazione è stata interamente scritta in Python 3.10 (con l'ausilio di Pycharm per la gestione e il test dell'applicazione) su piattaforme MacOS e Ubuntu,
 quindi per prima cosa occorrerà installare Python 3.10 (o versione 3 precedente/successiva). Essendo scritta in puro Python, non necessita di librerie esterne ad eccezione di `qrcode` in quanto necessaria per la creazione di un codice QR.
 
-In tal caso, si può installare da Pycharm stesso, oppure da terminale usando il package manager `pip` nella versione 3:
+In tal caso, si può installare da Pycharm stesso oppure da terminale usando il package manager `pip` nella versione 3:
 
 ````
 $ pip3 install qrcode
@@ -77,7 +77,7 @@ $ python3.10 app.py
 
 ## Unit testing
 
-Per quanto riguarda le unit tests si è usato il framework unittest e si possono provando dal terminale (oppure da Pycharm stesso) seguendo questi step:
+Per quanto riguarda le unit tests si è usato il framework unittest e si possono provare dal terminale (oppure da Pycharm stesso) seguendo questi step:
 
 ````
 $ cd speedup-restaurant/Elaborazione/Iterazione 3/project/iterazione3
