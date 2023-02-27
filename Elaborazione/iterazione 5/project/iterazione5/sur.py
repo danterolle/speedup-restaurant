@@ -22,7 +22,6 @@ class SUR:
         self.prenotazioni = []
         self.tavoli = {}
         self.ordini_pagati = []
-        self.ordini_da_pagare = []
 
     def inserimentoPrenotazione(self, nome, cognome, email, cellulare, num_persone, data, ora, idTavolo):
         cliente = Cliente(nome, cognome, email, cellulare, idTavolo)
@@ -219,20 +218,21 @@ class SUR:
         print("Prenotazione non trovata.")
 
     def visualizzaPagamenti(self):
-        for cliente, prenotazione in self.prenotazioni:
-            if prenotazione.id in self.ordini_pagati:
-                self.ordini_pagati.append((cliente, prenotazione))
-            else:
-                self.ordini_da_pagare.append((cliente, prenotazione))
+        # Crea un set contenente i tavoli che hanno già pagato e lo memorizza nella variabile tavoli_pagati
+        tavoli_pagati = set(self.ordini_pagati)
+        # Uso della list comprehension per costruire un elenco tavoli_da_pagare che contiene gli ID dei tavoli che
+        # non sono presenti nel set tavoli_pagati
+        tavoli_da_pagare = [cliente.idTavolo for cliente, prenotazione in self.prenotazioni if
+                            cliente.idTavolo not in tavoli_pagati]
 
-        print("Prenotazioni pagate:")
-        for cliente, prenotazione in self.ordini_pagati:
-            print(f"Prenotazione n. {prenotazione.id}")
-            print(f"Data: {prenotazione.data}")
-            print(f"Cliente: {cliente.nome} {cliente.cognome} {cliente.idTavolo}")
+        if not tavoli_pagati:
+            print("Nessun tavolo ha pagato.")
+        else:
+            # {', '.join(map(str, tavoli_pagati))} converte una lista di oggetti in una stringa separata da una virgola
+            print(f"Gli ordini pagati riguardano i tavoli n. {', '.join(map(str, tavoli_pagati))}")
 
-        print("\nPrenotazioni da pagare:")
-        for cliente, prenotazione in self.ordini_da_pagare:
-            print(f"Prenotazione n. {prenotazione.id}")
-            print(f"Data: {prenotazione.data}")
-            print(f"Cliente: {cliente.nome} {cliente.cognome} {cliente.idTavolo}")
+        if not tavoli_da_pagare:
+            print("Non ci sono tavoli che devono pagare.")
+        else:
+            print(f"I tavoli che devono pagare sono: {', '.join(map(str, tavoli_da_pagare))}")
+

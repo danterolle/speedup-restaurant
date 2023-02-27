@@ -126,7 +126,7 @@ def main():
             if sur.effettuaPagamento(id_tavolo):
                 print("Il pagamento è stato effettuato con successo")
             else:
-                print("Errore: il pagamento non è stato effettuato")
+                print("Il pagamento non è stato effettuato oppure è già stato pagato")
         elif scelta == "11":
             email = input("Inserisci l'email con cui hai effettuato la prenotazione: ")
             sur.annullaPrenotazione(email)

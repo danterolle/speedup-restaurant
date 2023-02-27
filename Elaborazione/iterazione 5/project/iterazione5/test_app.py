@@ -240,6 +240,37 @@ class TestSUR(unittest.TestCase):
         self.assertEqual(costo_totale, 8.0)
         self.assertEqual(pagamento, True)
 
+    def test_annullaPrenotazione(self):
+        sur = SUR.getInstance()
+        sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4,
+                                                      "2023-02-22", "19:00", 1)
+        sur.annullaPrenotazione("mario.rossi@example.com")
+        self.assertEqual(len(sur.prenotazioni), 1)
+
+    def test_visualizzaPagamenti(self):
+        sur = SUR.getInstance()
+
+        # Inserimento prenotazioni e portate
+        sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4, "2023-02-22", "19:00",
+                                    1)
+        sur.inserimentoPrenotazione("Luigi", "Verdi", "luigi.verdi@gmail.com", "0987654321", 2, "2023-02-23", "20:00",
+                                    2)
+        sur.inserimentoPortata(1, [Portata(1, "Pizza Margherita", 5.0), Portata(2, "Spaghetti alla Carbonara", 8.0)])
+        sur.inserimentoPortata(2, [Portata(3, "Tiramisù", 4.0)])
+
+        # Modifica ordine ed effettua pagamento
+        sur.modificaOrdine(1, [Portata(1, "Pizza Margherita", 5.0), Portata(2, "Spaghetti alla Carbonara", 8.0)], True)
+        sur.effettuaPagamento(1)
+
+        # Visualizza pagamenti della prenotazione 1
+        pagamenti_1 = sur.visualizzaPagamenti()
+        self.assertEqual(len(pagamenti_1), 1)
+        #self.assertEqual(pagamenti_1[0], 13.0)
+
+        # Visualizza pagamenti della prenotazione 2
+        pagamenti_2 = sur.visualizzaPagamenti(2)
+        #self.assertEqual(len(pagamenti_2), 0)
+
 
 if __name__ == "__main__":
     unittest.main()
