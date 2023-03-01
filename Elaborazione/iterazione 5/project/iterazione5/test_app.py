@@ -194,8 +194,6 @@ class TestSUR(unittest.TestCase):
     # Unit test che include le regole di dominio R1 e R2
     def test_visualizzaCostoTotaleUpdated(self):
         sur = SUR.getInstance()
-
-        # Inserimento prenotazioni e portate
         sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4, "2023-02-22", "19:00",
                                     1)
         sur.inserimentoPrenotazione("Mario", "Rossi", "mario.rossi@gmail.com", "1234567890", 4, "2023-02-22", "19:00",
@@ -203,8 +201,6 @@ class TestSUR(unittest.TestCase):
         sur.inserimentoPortata(1, [Portata(1, "Pizza Margherita", 5.0), Portata(2, "Spaghetti alla Carbonara", 8.0)])
         sur.inserimentoPortata(2, [Portata(2, "Spaghetti alla Carbonara", 8.0), Portata(3, "Tiramisù", 4.0)])
         sur.inserimentoPortata(1, [Portata(1, "Pizza Margherita", 5.0), Portata(3, "Tiramisù", 4.0)])
-
-        # Modifica ordine
         sur.modificaOrdine(1, [Portata(1, "Pizza Margherita", 5.0)], True)
 
         # Calcola costo totale e controlla il risultato
